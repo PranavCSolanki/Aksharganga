@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+th {
+  border: 1px solid #000;
+}
+td {
+  border: 1px solid #000;
+}
+
+.rank-column {
+  border-bottom: 1px solid #000;
+  position: relative;
+}
+
+.rank-header {
+  text-align: center;
+}
+
+.rank-title {
+  display: block;
+  font-weight: bold;
+}
+
+.subheadings {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #000;
+}
+
+.subheading {
+  flex: 1;
+  padding: 4px;
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+.subheading:last-child {
+  border-right: none;
+}
+
+.flexes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pd-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.pd-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.border-right {
+  border-right: 1px solid #000;
+}
+
+.bg-gradient-animation {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBackground 10s ease infinite;
+}
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spin-fast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse-fast {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes spin-extra-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-extra-reverse-slow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes pulse-fast {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+.animate-spin-fast {
+  animation: spin-fast 2s linear infinite;
+}
+
+.animate-spin-reverse-fast {
+  animation: spin-reverse-fast 3s linear infinite;
+}
+
+.animate-spin-extra-slow {
+  animation: spin-extra-slow 10s linear infinite;
+}
+
+.animate-spin-extra-reverse-slow {
+  animation: spin-extra-reverse-slow 12s linear infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse-fast 1.5s infinite;
+}

@@ -1,0 +1,191 @@
+.edit {
+  background-color: rgb(98, 210, 251);
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #312e81;
+  margin-right: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit:hover {
+  background-color: #a79700;
+}
+
+.dialog {
+  position: relative;
+  z-index: 10;
+}
+
+.dialogBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(107, 114, 128, 0.75);
+  transition: opacity 0.2s;
+}
+
+.dialogContainer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.95);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+.dialogPanel {
+  width: 100%;
+  max-width: 50vw;
+  transform: translateY(0);
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  text-align: center;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.dialogContent {
+  background-color: #ffffff;
+  padding: 1.25rem 1rem 1rem;
+  padding-bottom: 1rem;
+  padding-top: 1.25rem;
+  padding-inline: 1.5rem;
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: start;
+}
+
+
+.dialogTitleContainer {
+  margin: auto;
+}
+
+
+
+.dialogFooter {
+  background-color: #f9fafb;
+  padding: 1rem;
+  display: flex; 
+  justify-content: space-around;
+  padding-inline: 1.5rem;
+}
+
+.cancelButton {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  justify-content: center;
+  color: white;
+  border-radius: 0.375rem;
+  background-color: rgb(251, 15, 15);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.cancelButton:hover {
+  background-color: #fd4545;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+.saveButton {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  justify-content: center;
+  color: white;
+  border-radius: 0.375rem;
+  background-color: rgb(18, 109, 255);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.saveButton:hover {
+  background-color: #5b45fd;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.container {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: flex-start; 
+  align-items: center; 
+
+  .label {
+    margin-right: 1rem; 
+    flex: 1;
+    text-align: left; 
+  }
+  
+  .relative {
+    flex: 2; 
+    border-radius: 10px;
+  }
+}
+
+.heading2 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 18px;
+  color: #1a202c;
+}
+
+.button1 {
+  background-color: rgb(158, 91, 251);
+  color: white;
+  border: 1px solid #312e81;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.button1:hover {
+  background-color: #bb4d4d;
+}
+
+.label {
+  font-size: large;
+  margin-bottom: 25px;
+}
+
+.tab {
+  background-color: #f7fafc;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tbodys {
+  text-align: center;
+}
+.tbodys tr:nth-child(odd) {
+  background-color: rgb(199, 211, 251);
+}
+
+.tbodys tr:hover {
+  background-color: #72b8fe;
+  cursor: pointer;
+}

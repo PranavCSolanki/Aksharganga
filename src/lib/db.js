@@ -1,0 +1,1 @@
+export const Mongouri = process.env.MONGOURI
