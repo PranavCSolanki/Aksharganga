@@ -107,10 +107,11 @@ export async function GET(req) {
 
     return NextResponse.json(responseData);
   } catch (error) {
-    console.error("Error occurred:", error);
     return NextResponse.json({
       success: false,
       error: error.message || "An error occurred",
     });
   }
 }
+
+

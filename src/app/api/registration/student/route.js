@@ -6,25 +6,6 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 
-
-
-
-
-
-
-//   id  if 1 std then 1
-// center id 101 to 999
-// if student in 1 standent and 1 student then 101 to 999
-
-// 1 101 101
-
-
-
-
-
-
-
-
 export async function POST(req) {
   const body = await req.json();
   let success = false;
@@ -62,7 +43,6 @@ export async function POST(req) {
 
     return NextResponse.json({ data: newStudent, success: success });
   } catch (error) {
-    console.error(error);
     return NextResponse.json({ error: error.message, success: false });
   } finally {
     mongoose.connection.close();
@@ -103,7 +83,6 @@ export async function PUT(req) {
 
         return NextResponse.json({ success: true, student: updateStudent });
     } catch (error) {
-        console.error('Error updating student:', error);
         return NextResponse.json({ error: error.message });
     }
 }
@@ -136,7 +115,6 @@ export async function DELETE(req) {
           headers: { 'Content-Type': 'application/json' }
       });
   } catch (error) {
-      console.error('Error during DELETE request:', error);
 
       return new Response(JSON.stringify({ error: 'Failed to delete the item' }), {
           status: 500,

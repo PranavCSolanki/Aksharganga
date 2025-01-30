@@ -129,7 +129,6 @@ export async function GET(req) {
 
     return NextResponse.json(responseData);
   } catch (e) {
-    console.error("Error occurred:", e);
     return NextResponse.json({
       success: false,
       error: e.message || "An error occurred",

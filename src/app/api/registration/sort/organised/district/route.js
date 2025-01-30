@@ -13,8 +13,6 @@ export async function GET(req) {
         _id: "$district",
         id: { $first: "$id" },
         exam: { $first: "$exam" },
-        // taluka: { $first: "$taluka" },
-        // centers: { $first: "$centers" }
       }
     },
     {

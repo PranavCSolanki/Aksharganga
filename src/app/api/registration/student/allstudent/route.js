@@ -21,7 +21,6 @@ export async function POST(req) {
         return NextResponse.json({ error: "Center is required.", success: false });
     }
 
-    console.log(exam, district, taluka, center);
 
     try {
         await mongoose.connect(Mongouri);
@@ -47,7 +46,6 @@ export async function POST(req) {
 
         return NextResponse.json({ data, success: true });
     } catch (error) {
-        console.error(error);
         return NextResponse.json({ error: error.message, success: false });
     } 
 }

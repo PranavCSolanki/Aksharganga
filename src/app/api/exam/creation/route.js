@@ -33,7 +33,6 @@ export async function POST(req) {
 
     return NextResponse.json({ success: true, data: exam });
   } catch (error) {
-    console.error(error);
     return NextResponse.json({ success: false, error: error.message });
   } finally {
     await mongoose.connection.close();
@@ -68,7 +67,6 @@ export async function DELETE(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error during DELETE request:", error);
 
     return new Response(
       JSON.stringify({ error: "Failed to delete the item" }),
@@ -120,7 +118,6 @@ export async function PUT(req) {
       exam: updateExam,
     });
   } catch (error) {
-    console.error("Error updating exam:", error);
     return NextResponse.json({ error: error.message });
   } finally {
     mongoose.connection.close();

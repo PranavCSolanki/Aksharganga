@@ -13,7 +13,7 @@ export async function GET(req) {
 
     let exam = searchParams.get("exam");
     let center = searchParams.get("center");
-    console.log(exam, center);
+    let sortOrder = searchParams.get("sortOrder") || 'default'; 
 
     if (!exam || !center) {
         return NextResponse.json({ error: 'Parameter is required' });
@@ -23,8 +23,21 @@ export async function GET(req) {
         // Connect to MongoDB
         await mongoose.connect(Mongouri);
 
+        // Determine the sort order
+        let sortCriteria;
+        if (sortOrder === 'ascending') {
+            sortCriteria = { Class: 1, studName: 1 };
+        } else if (sortOrder === 'descending') {
+            sortCriteria = { Class: -1, studName: -1 };
+        } else {
+            sortCriteria = {}; // Default order (as uploaded)
+        }
+
         // Find data from MongoDB
-        const data = await StudentModel.find({ exam: exam, center: center });
+        const data = await StudentModel.find({
+            exam: exam,
+            center: center            
+        }).sort(sortCriteria).lean();
 
         if (data.length === 0) {
             return NextResponse.json({ error: 'No data found' });
@@ -34,16 +47,19 @@ export async function GET(req) {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Data');
 
-        // Define the columns to be included in the Excel file
-        const columns = ['exam', 'studName', 'gender', 'Class', 'medium','school','center','taluka','district', 'mobNo' ];
-
+        // Define the columns to be included in the Excel file, including 'sr no'
+        const columns = ['sr no', 'exam', 'studName', 'gender', 'Class', 'medium', 'school', 'center', 'taluka', 'district', 'mobNo'];
         // Add column headers dynamically based on the specified columns
         worksheet.columns = columns.map(key => ({ header: key, key }));
 
         // Add rows to the worksheet, filtering only the specified columns
-        data.forEach(item => {
+        data.forEach((item, index) => {
             const filteredItem = columns.reduce((obj, key) => {
-                obj[key] = item[key];
+                if (key === 'sr no') {
+                    obj[key] = index + 1; // Assign serial number
+                } else {
+                    obj[key] = item[key];
+                }
                 return obj;
             }, {});
             worksheet.addRow(filteredItem);
@@ -64,7 +80,6 @@ export async function GET(req) {
         // Return the response to trigger file download
         return response;
     } catch (error) {
-        console.error('Error generating Excel file:', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     } finally {
         // Always disconnect the database connection after the request is done

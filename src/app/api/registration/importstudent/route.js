@@ -226,7 +226,7 @@ async function processRows(rows, exam, district, taluka, center, centerId) {
 
       if (!examData.standards.includes(standard.className)) {
         invalidStandards.add(standard.className);
-        console.warn(`Skipping row due to class "${standard.className}" not being part of the exam.`);
+      
       } else {
         validRows.push({ rowData, standard });
       }
@@ -291,7 +291,6 @@ async function processValidRow(rowData, exam, district, taluka, center, centerId
 
     return await student.save();
   } catch (error) {
-    console.error(`Error saving student record: ${error.message}`);
     throw new Error(`Error saving student record: ${error.message}`);
   }
 }

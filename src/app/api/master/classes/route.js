@@ -85,7 +85,6 @@ export async function DELETE(req) {
           headers: { 'Content-Type': 'application/json' }
       });
   } catch (error) {
-      console.error('Error during DELETE request:', error);
 
       return new Response(JSON.stringify({ error: 'Failed to delete the item' }), {
           status: 500,

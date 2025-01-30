@@ -26,7 +26,6 @@ export async function GET(req, content) {
     ]);
     return NextResponse.json({ data: data });
   } catch (error) {
-    console.error("Error fetching data:", error);
     return NextResponse.json({ error: error.message, success: false });
   } 
 }

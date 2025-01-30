@@ -17,31 +17,36 @@ const ResultSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  class: {
+  Standard: {  
     type: String,
     required: true,
   },
-  medium: {
+ 
+  StudentName: {
     type: String,
-    required: true,
+    required: true
   },
   RollNo: {
     type: Number,
     required: true,
+    unique: true,  // Added unique constraint
   },
-  subject: {
-    type: String,
-    required: true,
-  },
-  marks: {
-    type: Number,
-    default: 0,
-  },
-  studName: {
-    type: String,
-    required: true,
-  },
+
+ subjects: [{
+    subject: {
+      type: String,
+     required: true,
+    },
+    marks: {
+      type: Number,
+      default: 0,
+    },
+  }],
   school: {
+    type: String,
+    required: true,
+  },
+  medium: {
     type: String,
     required: true,
   }

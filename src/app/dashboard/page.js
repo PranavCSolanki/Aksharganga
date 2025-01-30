@@ -1,31 +1,37 @@
 "use client";
 
+import AnswerSheet from "@/_Components/Exam_Dashboard/BeforeExam/AnswerSheet";
+import AttendanceSheet from "@/_Components/Exam_Dashboard/BeforeExam/AttendanceSheet";
+import BenchSticker from "@/_Components/Exam_Dashboard/BeforeExam/BenchSticker";
+import HallTicket from "@/_Components/Exam_Dashboard/BeforeExam/HallTicket";
+import AddExam from "@/_Components/Exam_Dashboard/Exam/ExamCreation/AddExam";
+import OrganiseExam from "@/_Components/Exam_Dashboard/Exam/Organise-Exam/OrganiseExam";
+import CenterMaster from "@/_Components/Exam_Dashboard/Master/center-master/CityMaster";
+import ClassMaster from "@/_Components/Exam_Dashboard/Master/Class-master/ClassMaster";
+import CoOrdinator from "@/_Components/Exam_Dashboard/Master/CoOrdinator/CoOrdinator";
+import DistMaster from "@/_Components/Exam_Dashboard/Master/dist-master/DistMaster";
+import SubjectMaster from "@/_Components/Exam_Dashboard/Master/Subject-master/SubjectMaster";
+import TalukaMaster from "@/_Components/Exam_Dashboard/Master/taluka-master/TalukaMaster";
+import Publish from "@/_Components/Exam_Dashboard/publish/page";
+import Center from "@/_Components/Exam_Dashboard/Rank/Center/Center";
+import CenterRank from "@/_Components/Exam_Dashboard/Rank/CenterRank/CenterRank";
+import District from "@/_Components/Exam_Dashboard/Rank/DistrictLevel/District";
+import State from "@/_Components/Exam_Dashboard/Rank/StateLevel/State";
+import CenterList from "@/_Components/Exam_Dashboard/Registration/Appear_Students/CenterList";
+import GenerateRoll from "@/_Components/Exam_Dashboard/Registration/Gen-Roll/GenerateRoll";
+import ImportStudent from "@/_Components/Exam_Dashboard/Registration/ImportStudents/ImportStudent";
+import AddStudent from "@/_Components/Exam_Dashboard/Registration/StudentRegistration/AddStudent";
+import CenterWiseResult from "@/_Components/Exam_Dashboard/ResultProcess/CenterWiseResult";
+import UploadResult from "@/_Components/Exam_Dashboard/ResultProcess/UploadResult/UploadResult";
+import SeeMedium from "@/_Components/Exam_Dashboard/StatasticalData/center/SeeMediumData";
+import SeeCoOrdinatorData from "@/_Components/Exam_Dashboard/StatasticalData/CoOrdinator/SeeCoOrdinatorData";
+import DistCenter from "@/_Components/Exam_Dashboard/StatasticalData/Distcenter/DistCenter";
+import SeeDistrictData from "@/_Components/Exam_Dashboard/StatasticalData/State/SeeDistrictData";
+import StudResult from "@/_Components/Exam_Dashboard/Studentresult/StudResult";
 import { useState } from "react";
 import { FaChevronDown, FaChevronRight, FaBars } from "react-icons/fa";
-import DistMaster from "@/_Components/Master/dist-master/DistMaster";
-import TalukaMaster from "@/_Components/Master/taluka-master/TalukaMaster";
-import CityMaster from "@/_Components/Master/center-master/CityMaster";
-import CoOrdinator from "@/_Components/Master/CoOrdinator/CoOrdinator";
-import ClassMaster from "@/_Components/Master/Class-master/ClassMaster";
-import SubjectMaster from "@/_Components/Master/Subject-master/SubjectMaster";
-import OrganiseExam from "@/_Components/Exam/Organise-Exam/OrganiseExam";
-import CenterList from "@/_Components/Registration/Appear_Students/CenterList";
-import SeeDistricts from "@/_Components/StatasticalData/State/SeeDistrictData";
-import SeeMedium from "@/_Components/StatasticalData/center/SeeMediumData";
-import SeeCoOrdinator from "@/_Components/StatasticalData/CoOrdinator/SeeCoOrdinatorData";
-import State from "@/_Components/Rank/StateLevel/State";
-import District from "@/_Components/Rank/DistrictLevel/District";
-import Center from "@/_Components/Rank/Center/Center";
-import GenerateRoll from "@/_Components/Registration/Gen-Roll/GenerateRoll";
-import UploadResult from "@/_Components/ResultProcess/UploadResult/UploadResult";
-import CenterWiseResult from "@/_Components/ResultProcess/CenterWiseResult";
-import CenterRank from "@/_Components/Rank/CenterRank/CenterRank";
-import StudResult from "@/_Components/Studentresult/StudResult";
-import AddExam from "@/_Components/Exam/ExamCreation/AddExam";
-import 'react-toastify/dist/ReactToastify.css';
-import AddStudent from "@/_Components/Registration/StudentRegistration/AddStudent";
-import ImportStudent from "@/_Components/Registration/ImportStudents/ImportStudent";
-import DistCenter from "@/_Components/StatasticalData/Distcenter/DistCenter";
+import { ToastContainer } from "react-toastify";
+
 
 export default function Dashboard() {
   const [sidebarToggle, setSidebarToggle] = useState(true);
@@ -65,6 +71,14 @@ export default function Dashboard() {
       ],
     },
     {
+      "Print Before Exam": [
+        { name: "Hall Ticket", path: "/hallticket" },
+        { name: "Attendance Sheet", path: "/attendancesheet" },
+        { name: "Answer Sheet", path: "/answersheet" },
+        { name: "Bench Sticker", path: "/benchsticker" },
+      ],
+    },
+    {
       "Statistical Data": [
         { name: "State District Wise", path: "/district" },
         { name: "District Center Wise", path: "/center" },
@@ -75,16 +89,30 @@ export default function Dashboard() {
     {
       "Result Process": [
         { name: "Upload Result Excel", path: "/uploadresult" },
-        { name: "Center Wise Result", path: "/centerwiseresult" },
+        { name: "Class Wise Result", path: "/centerwiseresult" },
         { name: "Upload Answer Sheets", path: "/upload-answer-sheets" },
       ],
     },
     {
+      "Publish result": [
+        { name: "Publish", path: "/publish" },
+      ],
+    },
+    
+    
+    {
       "Display Rank ": [
-        { name: "State Level ", path: "/state" },
+        { name: "State Level ", path: "/staterank" },
         { name: "District Level ", path: "/districtrank" },
         { name: "Center Level ", path: "/centerrank" },
         { name: "Center (Rank Wise)", path: "/centerrankwise" },
+      ],
+    },
+    
+    {
+      "Print After Exam": [
+        { name: "Center Wise Result", path: "/centerwiseresult" },
+        { name: "Certificate", path: "/uploadresult" },
       ],
     },
       
@@ -93,10 +121,16 @@ export default function Dashboard() {
         { name: "Roll Number Wise", path: "/result" },
       ],
     },
+    
+    {
+      "Other": [
+        { name: "Messages", path: "" },
+        { name: "Shift Center", path: "" },
+        { name: "Edit Marks", path: "" },
+        { name: "Change Exam Date", path: "" },
+      ],
+    },
       
-    "Messages",
-    "Shift Center",
-    "Edit Marks",
   ];
 
   const handleSidebarToggle = () => {
@@ -133,7 +167,7 @@ export default function Dashboard() {
       case "/taluka-master":
         return <TalukaMaster />;
       case "/center-master":
-        return <CityMaster />;
+        return <CenterMaster/>;
       case "/coordinator-master":
         return <CoOrdinator />;
       case "/class-master":
@@ -150,15 +184,23 @@ export default function Dashboard() {
         return <ImportStudent/>;
       case "/appear-student":
         return <CenterList />;
+      case "/hallticket":
+        return <HallTicket />;
+      case "/attendancesheet":
+        return <AttendanceSheet />;
+      case "/answersheet":
+        return <AnswerSheet />;
+      case "/benchsticker":
+        return <BenchSticker />;
       case "/district":
-        return <SeeDistricts />;
+        return <SeeDistrictData />;
       case "/center":
-        return <DistCenter />;
+        return <DistCenter/>;
       case "/medium":
         return <SeeMedium />;
       case "/co-ordinator":
-        return <SeeCoOrdinator />;
-      case "/state":
+        return <SeeCoOrdinatorData />;
+      case "/staterank":
         return <State />;
       case "/districtrank":
         return <District />;
@@ -174,6 +216,8 @@ export default function Dashboard() {
         return <CenterRank />;
       case "/result":
         return <StudResult />;
+      case "/publish":
+        return <Publish/> ;
       default:
         return <p>Please select a valid option from the sidebar.</p>;
     }
@@ -188,6 +232,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen ">
+      <ToastContainer />
       <div
         className={`bg-indigo-900 text-white w-64 h-full py-7 overflow-y-auto max-h-full scrollbar-hide px-2 absolute inset-y-0 left-0 transform ${
           sidebarToggle ? "translate-x-0" : "-translate-x-full"

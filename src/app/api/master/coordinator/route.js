@@ -35,9 +35,6 @@ export async function POST(req) {
     let flast = body.fname.slice(-1).toLowerCase();
     let mob = String(body.mob).slice(-3);
 
-    console.log(fname);
-    console.log(flast);
-
     let UserName = body.email;
     let Password = `${lname}${fname}${flast}@${mob}`;
 
@@ -69,8 +66,6 @@ export async function PUT(req) {
 
     
 
-    console.log("Request Body:", { id, FirstName, LastName, Address, Mobile1, Password });
-
     if (!id || !FirstName || !LastName || !Address || !Mobile1 || !Password) {
       return NextResponse.json({ error: "Missing required fields" });
     }
@@ -92,7 +87,6 @@ export async function PUT(req) {
 
     return NextResponse.json({ success: true, Coordinator: updatedCoordinator });
   } catch (error) {
-    console.error("Error updating coordinator:", error);
     return NextResponse.json({ error: error.message });
   } finally {
     mongoose.connection.close();
@@ -128,7 +122,6 @@ export async function DELETE(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error during DELETE request:", error);
 
     return new Response(
       JSON.stringify({ error: "Failed to delete the item" }),

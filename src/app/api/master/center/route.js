@@ -1,5 +1,4 @@
 import { Mongouri } from "@/lib/db";
-// import OrganizeModel from "@/lib/Models/Exam/OrganiseModel";
 import CenterModel from "@/lib/Models/Master/CenterModel";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
@@ -12,7 +11,6 @@ export async function GET(req) {
   let taluka = searchParams.get("taluka");
   let coOrd = searchParams.get("coordinator");
 
-  console.log(dist, taluka, coOrd);
   let data;
 
   await mongoose.connect(Mongouri);
@@ -70,63 +68,11 @@ export async function POST(req) {
   }
 }
 
-// export async function PUT(req) {
-//   try {
-//     let { id, CenterName} =
-//       await req.json();
-
-//     console.log("Request Body:", {
-//       id,
-//       CenterName
-//     });
-
-//     if (!id || !CenterName) {
-//       return NextResponse.json({ error: "Missing required fields" });
-//     }
-
-//     await mongoose.connect(Mongouri, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     });
-
-//     const updatedCenter = await CenterModel.findByIdAndUpdate(
-//       id,
-//       { CenterName},
-//       { new: true }
-//     );
-//     const updatedorgmodel = await OrganizeModel.updateMany(
-    
-//       { centers},
-//       { new: true }
-//     );
-
-
-
-//     if (!updatedCenter && !updatedorgmodel) {
-//       return NextResponse.json({ error: "Center not found" });
-//     }
-
-//     return NextResponse.json({
-//       success: true,
-//       Center: updatedCenter,
-//     });
-//   } catch (error) {
-//     console.error("Error updating coordinator:", error);
-//     return NextResponse.json({ error: error.message });
-//   } finally {
-//     mongoose.connection.close();
-//   }
-// }
-
-// Update function for PUT request
 export async function PUT(req) {
   try {
     // Parse request body
     let { id, CenterName } = await req.json();
 
-    console.log('Request Body:', { id, CenterName });
-
-    // Check for missing required fields
     if (!id || !CenterName) {
       return NextResponse.json({ error: 'Missing required fields' });
     }
@@ -148,17 +94,6 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'Center not found' });
     }
 
-    // const updatedOrganizeModel = await OrganizeModel.updateMany(
-    //   { centers: { $in: [updatedCenter.CenterName] } }, 
-    //   { $set: { 'centers.$': CenterName } },
-    //   { new: true }
-    // );
-
-    // // Check if OrganizeModel was updated
-    // if (!updatedOrganizeModel.modifiedCount) {
-    //   return NextResponse.json({ error: 'No matching center found in OrganizeModel' });
-    // }
-
     // Return success response
     return NextResponse.json({
       success: true,
@@ -166,7 +101,6 @@ export async function PUT(req) {
       // updatedOrganizeModel,
     });
   } catch (error) {
-    console.error('Error updating:', error);
     return NextResponse.json({ error: error.message });
   } finally {
     // Close the mongoose connection
@@ -202,7 +136,6 @@ export async function DELETE(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error during DELETE request:", error);
 
     return new Response(
       JSON.stringify({ error: "Failed to delete the item" }),

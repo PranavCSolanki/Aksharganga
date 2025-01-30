@@ -9,7 +9,6 @@ export async function GET(req, res) {
   let district = searchParams.get("district");
   let taluka = searchParams.get("taluka");
 
-  console.log(district, taluka);
 
   await mongoose.connect(Mongouri);
 
@@ -24,8 +23,6 @@ export async function POST(req, res) {
   try {
     const body = await req.json();
     const { exam, district, taluka, centers } = body.data;
-
-    console.log("Request Body:", body);
 
     if (!exam) {
       return NextResponse.json({
@@ -80,12 +77,10 @@ export async function POST(req, res) {
 
       const savedData = await data.save();
       savedEntries.push(savedData);
-      console.log(savedData);
     }
 
     return NextResponse.json({ success: true, data: savedEntries });
   } catch (error) {
-    console.error("Error:", error);
     return NextResponse.json({
       success: false,
       error: "An error occurred while organizing the exam.",
@@ -127,7 +122,6 @@ export async function DELETE(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error during DELETE request:", error);
 
     return new Response(
       JSON.stringify({ error: "Failed to delete the item" }),

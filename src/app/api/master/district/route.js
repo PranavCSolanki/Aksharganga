@@ -49,10 +49,6 @@ export async function POST(req) {
 export async function PUT(req) {
   const { id, distName } = await req.json();
 
-  console.log('Request Body:', req.body); // Log the request body
-  console.log('ID:', id); // Log the ID
-  console.log('District Name:', distName); // Log the District Name
-
   if (!id || !distName) {
     return NextResponse.json({ error: 'Missing required fields' });
   }
@@ -99,7 +95,6 @@ export async function DELETE(req) {
           headers: { 'Content-Type': 'application/json' }
       });
   } catch (error) {
-      console.error('Error during DELETE request:', error);
 
       return new Response(JSON.stringify({ error: 'Failed to delete the item' }), {
           status: 500,

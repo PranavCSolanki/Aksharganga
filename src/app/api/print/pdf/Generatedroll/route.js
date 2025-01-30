@@ -4,21 +4,20 @@ import { NextResponse } from 'next/server';
 import puppeteer from 'puppeteer';
 import GeneratedRollModel from '@/lib/Models/Registration/RollNo/GeneratedModel';
 
-export async function GET(req) {
-    const { searchParams } = req.nextUrl;
-    const exam = searchParams.get("exam");
-    const center = searchParams.get("center");
-
-    if (!exam || !center) {
-        return NextResponse.json({ error: 'Parameters "exam" and "center" are required' });
-    }
-
+export async function POST(req) {
     try {
+        const { exam, center, sortOrder } = await req.json();
+        const order = sortOrder === 'descending' ? -1 : 1; // Default to ascending
+
+        if (!exam || !center) {
+            return NextResponse.json({ error: 'Parameters "exam" and "center" are required' });
+        }
+
         // Connect to MongoDB
         await mongoose.connect(Mongouri);
 
-        // Fetch students data based on exam and center
-        const data = await GeneratedRollModel.find({ exam: exam, center: center });
+        // Fetch students data based on exam and center with sorting
+        const data = await GeneratedRollModel.find({ exam: exam, center: center }).sort({ rollNo: order });
 
         if (data.length === 0) {
             return NextResponse.json({ error: 'No data found' });
@@ -33,13 +32,13 @@ export async function GET(req) {
                             margin: 0;
                             padding: 20px;
                             font-family: Arial, sans-serif;
-                            background-color: #ffffff; /* White background */
-                            color: #333; /* Black text color */
+                            background-color: #ffffff;
+                            color: #333;
                         }
                         h1 {
                             text-align: center;
                             color: #333;
-                            font-size: 28px; /* Increased font size */
+                            font-size: 28px;
                             margin-bottom: 20px;
                             border-bottom: 3px solid #333;
                             padding-bottom: 10px;
@@ -47,31 +46,31 @@ export async function GET(req) {
                         table {
                             width: 100%;
                             border-collapse: collapse;
-                            margin-top: 30px; /* Add margin to prevent top border cut-off */
+                            margin-top: 30px;
                             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                         }
                         th, td {
                             padding: 12px;
                             text-align: left;
-                            border: 1px solid #333; /* Solid border */
+                            border: 1px solid #333;
                         }
                         th {
-                            background-color: #f4f4f4; /* Light grey for headers */
-                            color: #000; /* Black text for headers */
+                            background-color: #f4f4f4;
+                            color: #000;
                             font-weight: bold;
                         }
                         tr:nth-child(even) {
-                            background-color: #f9f9f9; /* Light alternating row color */
+                            background-color: #f9f9f9;
                         }
                         tr:hover {
-                            background-color: #eaeaea; /* Highlight on hover */
+                            background-color: #eaeaea;
                         }
                         @media print {
                             body {
                                 margin: 0;
                             }
                             h1 {
-                                font-size: 24px; /* Adjusted size for print */
+                                font-size: 24px;
                             }
                         }
                     </style>
@@ -94,8 +93,7 @@ export async function GET(req) {
                                 <th>Mobile No</th>
                             </tr>
                         </thead>
-                        <tbody>
-        `;
+                        <tbody>`;
 
         let srno = 1;
         data.forEach(item => {
@@ -112,16 +110,14 @@ export async function GET(req) {
                     <td>${item.taluka || '-'}</td>
                     <td>${item.district || '-'}</td>
                     <td>${item.mobile || '-'}</td>
-                </tr>
-            `;
+                </tr>`;
         });
 
         html += `
                         </tbody>
                     </table>
                 </body>
-            </html>
-        `;
+            </html>`;
 
         // Launch puppeteer and create a PDF
         const browser = await puppeteer.launch();
@@ -129,8 +125,8 @@ export async function GET(req) {
         await page.setContent(html);
         const pdfBuffer = await page.pdf({ 
             format: 'A4',
-            landscape: true, // Set to landscape orientation
-            margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' } // Set margins
+            landscape: true,
+            margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' }
         });
         await browser.close();
 
@@ -144,7 +140,6 @@ export async function GET(req) {
         });
 
     } catch (error) {
-        console.error('Error generating PDF:', error);
         return NextResponse.json({ error: 'Internal Server Error' });
     } finally {
         // Disconnect from MongoDB
