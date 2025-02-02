@@ -2,6 +2,7 @@ import axios from "axios";
 import styles from "../Styles/Dist.module.css";
 import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
+import { FaPrint } from "react-icons/fa";
 
 export default function StudResult() {
   const [rollno, setRollno] = useState("");
@@ -47,6 +48,45 @@ export default function StudResult() {
     }
   };
 
+  const handlePdfDownload = async (rollNo) => {
+    try {
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/result/studentresult`,
+            {
+                rollNo:rollNo,
+            },
+            {
+                headers: {
+                    Accept: "application/pdf",
+                },
+                responseType: "blob", // Important for handling binary data
+            }
+        );
+
+        if (response.status !== 200) {
+            throw new Error("Failed to download PDF file");
+        }
+
+        const blob = new Blob([response.data], { type: "application/pdf" });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = `${rollNo}.pdf`; // File name with .pdf extension
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+
+        toast.success("File Downloaded Successfully");
+    } catch (error) {
+        toast.error("Failed to download PDF file");
+    }
+
+
+    
+
+};
+
   return (
     <>
       <ToastContainer />
@@ -80,6 +120,17 @@ export default function StudResult() {
         </div>
 
         {isResultVisible && studentData && (
+          <> <div className="mb-7" style={{ marginBottom: "10px" }}>
+                          <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
+                            <button
+                              className="relative bg-opacity-30  p-2 rounded-full  text-center flex items-center justify-center transition-transform duration-300 transform hover:scale-105"
+                              style={{ backgroundColor: "pink", border: "1px solid red" }}
+                              onClick={() => handlePdfDownload(rollno)}
+                            >
+                              <FaPrint className="text-black text-lg m-2" />
+                            </button>
+                          </div>
+                        </div>
           <table className="w-full my-2 text-sm text-left rtl:text-right text-black border-collapse">
             <thead className="text-xs my-2 capitalize rounded-lg bg-gray-200">
               <tr className="bg-slate-200">
@@ -100,7 +151,7 @@ export default function StudResult() {
               </tr>
             </thead>
             <tbody className={styles.tbodys}>
-              <tr className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform">
+              <tr className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform">
                 <td className="px-6 py-2">1</td>
                 <td className="px-6 py-2">{studentData.rollNo}</td>
                 <td className="px-6 py-2">{studentData.studentName}</td>
@@ -132,7 +183,8 @@ export default function StudResult() {
                 )}
               </tr>
             </tbody>
-          </table>
+            </table>
+            </>
         )}
       </div>
     </>

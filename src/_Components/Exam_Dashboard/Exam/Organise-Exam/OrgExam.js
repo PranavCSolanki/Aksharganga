@@ -136,7 +136,7 @@ export default function OrgExam() {
             required
             value={exam}
             onChange={(e) => setExam(e.target.value)}
-            className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+           className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
           >
             <option>Select</option>
             {exams.map((exm) => (
@@ -160,7 +160,7 @@ export default function OrgExam() {
             required
             value={district}
             onChange={(e) => setDistrict(e.target.value)}
-            className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+           className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
           >
             <option>Select</option>
             {districts.map((dist) => (
@@ -183,8 +183,8 @@ export default function OrgExam() {
             autoComplete="Taluka-name"
             value={taluka}
             onChange={(e) => setTaluka(e.target.value)}
-            className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-          >
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
             <option>Select</option>
             {talukas.map((tal) => (
               <option key={tal._id} value={tal.TalukaName}>
@@ -206,8 +206,7 @@ export default function OrgExam() {
           {centers.map((tech) => (
             <li
               key={tech._id}
-              className="relative p-6 mt-6 flex rounded-2xl border border-blue-300 hover:shadow-2xl hover:border-blue-500"
-              style={{ marginLeft: "100px", marginRight: "100px", marginTop: "50px", marginBottom: "50px" }}
+              className="relative flex ml-52 rounded-2xl hover:border-blue-500"
             >
               <input
                 type="checkbox"
@@ -216,7 +215,7 @@ export default function OrgExam() {
                 className="w-6 m-6 h-6 text-blue-700 border-gray-300 rounded-lg focus:ring-blue-500 focus:ring-2"
                 onChange={() => handleCheckboxChange(tech.CenterName, tech.CenterId)}
               />
-              <label htmlFor={`${tech.CenterName}-checkbox`} className={styles.label} style={{ marginLeft: "50px", marginTop: "-1px" }}>
+              <label htmlFor={`${tech.CenterName}-checkbox`} className={styles.label} style={{ marginLeft: "50px", marginTop: "18px" }}>
                 <span className="transition-transform duration-300 ease-in-out group-hover:scale-105">
                   {tech.CenterName}
                 </span>
@@ -226,12 +225,10 @@ export default function OrgExam() {
         </ul>
       </div>
 
-      <div className="bg-white p-6 border border-gray-200">
         <div className="btnwrapper">
           <button type="submit" className={styles.button} onClick={handleSubmit}>
             Save
           </button>
-        </div>
       </div>
     </div>
   );

@@ -207,7 +207,7 @@ export default function State() {
               required
               value={exam}
               onChange={(e) => setExam(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {exams.map((exm) => (
@@ -231,7 +231,7 @@ export default function State() {
               required
               value={selectedClass}
               onChange={(e) => setSelectedClass(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {classes.map((cls) => (
@@ -258,7 +258,7 @@ export default function State() {
         </div>
       </div>
       <div
-        className={`${styles.containers}  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
+        className={`${styles.containers}  p-8 rounded-lg shadow-2xl`}
       >
         <div className="mb-7" style={{ marginBottom: "10px" }}>
           <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
@@ -329,7 +329,7 @@ export default function State() {
                 {currentData.map((dat, index) => (
                   <tr
                     key={dat._id}
-                    className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform "
+                    className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform "
                   >
                     <td className="px-6 py-2">
                       {indexOfFirstItem + index + 1}

@@ -24,38 +24,37 @@ export default function SeeDistrictData() {
 
   const handlePdfDownload = async (exam, medium) => {
     try {
-        const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/statastical/statedist?exam=${exam}&medium=${medium}`,
-            null, // No body needed for this POST request
-            {
-                headers: {
-                    Accept: "application/pdf",
-                },
-                responseType: "blob", // Important for handling binary data
-            }
-        );
-
-        if (response.status !== 200) {
-            throw new Error("Failed to download PDF file");
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/statastical/statedist?exam=${exam}&medium=${medium}`,
+        null, // No body needed for this POST request
+        {
+          headers: {
+            Accept: "application/pdf",
+          },
+          responseType: "blob", // Important for handling binary data
         }
+      );
 
-        const blob = new Blob([response.data], { type: "application/pdf" });
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        link.download = `${exam}_${medium}.pdf`; // File name with .pdf extension
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(downloadUrl);
+      if (response.status !== 200) {
+        throw new Error("Failed to download PDF file");
+      }
 
-        toast.success("File Downloaded Successfully");
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `${exam}_${medium}.pdf`; // File name with .pdf extension
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+
+      toast.success("File Downloaded Successfully");
     } catch (error) {
-        console.error("Error downloading PDF:", error);
-        toast.error(`Failed to download PDF file: ${error.message}`);
+      console.error("Error downloading PDF:", error);
+      toast.error(`Failed to download PDF file: ${error.message}`);
     }
-};
-
+  };
 
   useEffect(() => {
     fetchExam();
@@ -87,7 +86,7 @@ export default function SeeDistrictData() {
         toast.info("No data found for the selected criteria");
       } else {
         setIsResultVisible(false);
-        toast.error( data.message);
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error("Error fetching district data");
@@ -114,7 +113,7 @@ export default function SeeDistrictData() {
               required
               value={exam}
               onChange={(e) => setExam(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {exams.map((exm) => (
@@ -137,7 +136,7 @@ export default function SeeDistrictData() {
               value={medium}
               onChange={(e) => setMedium(e.target.value)}
               autoComplete="Medium-name"
-              className="block w-full rounded-md border-0  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="All">All</option>
               <option value="Marathi">Marathi</option>
@@ -153,97 +152,103 @@ export default function SeeDistrictData() {
       </div>
       {isResultVisible && (
         <>
-    
-      {districtData && (
-        <>
-        <div className={styles.containers}>
-            <div
-              className="flex justify-center items-center m-6 p-6 bg-white rounded-xl border border-gray-200  transition-shadow duration-300 ease-in-out"
-              style={{ marginBottom: "20px" }}
-            >
-              <div className="text-3xl font-bold m-8 text-transparent bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text hover:from-red-400 hover:to-yellow-400 transition-colors duration-300 ease-in-out">
-                Exam :- {exam}
+          {districtData && (
+            <>
+              <div className={styles.containers}>
+                <div className="flex justify-center items-center bg-white rounded-xl  ">
+                  <div className="text-2xl font-bold bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text hover:from-red-400 hover:to-yellow-400 transition-colors duration-300 ease-in-out">
+                    Exam :- {exam}
+                  </div>
+                </div>
+                <div className="flex justify-center items-center p-6 bg-white rounded-xl ">
+                  <div className="text-xl font-bold  bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text hover:from-blue-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
+                    Medium :- {medium}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="flex justify-center items-center mb-6 p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 ease-in-out">
-              <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text hover:from-blue-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
-                Medium :- {medium}
-              </div>
-              
-            </div>
-          </div>
-        <div
-          className={`${styles.containers} bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
-              >
+              <div className={`${styles.containers} p-8 rounded-lg shadow-2xl`}>
                 <div className="mb-7" style={{ marginBottom: "10px" }}>
-                                <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
-                                  <button
-                                    className="relative bg-opacity-30  p-2 rounded-full  text-center flex items-center justify-center transition-transform duration-300 transform hover:scale-105"
-                                    style={{ backgroundColor: "pink", border: "1px solid red" }}
-                                    onClick={() => handlePdfDownload(exam, medium)}
-                                  >
-                                    <FaPrint className="text-black text-lg m-2" />
-                                  </button>
-                                </div>
-                              </div>
-          <div
-            className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
-          >
-            <table className="w-full my-2 text-sm text-left rtl:text-right text-black border-collapse">
-              <thead className="text-xs my-2 uppercase rounded-lg">
-                <tr className="bg-slate-200">
-                  <th scope="col" className="px-6 py-3 border-b">
-                    Sr. No.
-                  </th>
-                  <th scope="col" className="px-6 py-3 border-b">
-                    District
-                  </th>
-                  {districtData.standards.map((standard, index) => (
-                    <th key={index} scope="col" className="px-6 py-3 border-b">
-                      {standard}
-                    </th>
-                  ))}
-                  <th scope="col" className="px-6 py-3 border-b">
-                    Total
-                  </th>
-                </tr>
-              </thead>
-              <tbody className={styles.tbodys}>
-                {districtData.tableData.map((district, index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform"
-                  >
-                    <td className="px-6 py-2">{district.srNo}</td>
-                    <td className="px-6 py-2">{district.district}</td>
-                    {district.standardCounts.map((count, idx) => (
-                      <td key={idx} className="px-6 py-2">
-                        {count}
-                      </td>
-                    ))}
-                    <td className="px-6 py-2">{district.totalForDistrict}</td>
-                  </tr>
-                ))}
+                  <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
+                    <button
+                      className="relative bg-opacity-30  p-2 rounded-full  text-center flex items-center justify-center transition-transform duration-300 transform hover:scale-105"
+                      style={{
+                        backgroundColor: "pink",
+                        border: "1px solid red",
+                      }}
+                      onClick={() => handlePdfDownload(exam, medium)}
+                    >
+                      <FaPrint className="text-black text-lg m-2" />
+                    </button>
+                  </div>
+                </div>
+                <div
+                  className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
+                >
+                  <table className="w-full my-2 text-sm text-left rtl:text-right text-black border-collapse">
+                    <thead className="text-xs my-2 uppercase rounded-lg">
+                      <tr className="bg-slate-200">
+                        <th scope="col" className="px-6 py-3 border-b">
+                          Sr. No.
+                        </th>
+                        <th scope="col" className="px-6 py-3 border-b">
+                          District
+                        </th>
+                        {districtData.standards.map((standard, index) => (
+                          <th
+                            key={index}
+                            scope="col"
+                            className="px-6 py-3 border-b"
+                          >
+                            {standard}
+                          </th>
+                        ))}
+                        <th scope="col" className="px-6 py-3 border-b">
+                          Total
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className={styles.tbodys}>
+                      {districtData.tableData.map((district, index) => (
+                        <tr
+                          key={index}
+                          className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform"
+                        >
+                          <td className="px-6 py-2">{district.srNo}</td>
+                          <td className="px-6 py-2">{district.district}</td>
+                          {district.standardCounts.map((count, idx) => (
+                            <td key={idx} className="px-6 py-2">
+                              {count}
+                            </td>
+                          ))}
+                          <td className="px-6 py-2">
+                            {district.totalForDistrict}
+                          </td>
+                        </tr>
+                      ))}
 
-                {/* Total row */}
-                <tr className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform">
-                  <td className="px-6 py-2">Total</td>
-                  <td className="px-6 py-2">All Districts</td>
-                  {districtData.totalRow.standardCounts.map((total, idx) => (
-                    <td key={idx} className="px-6 py-2">
-                      {total}
-                    </td>
-                  ))}
-                  <td className="px-6 py-2">{districtData.totalRow.totalForDistrict}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          </div>
-          </>
-      )}
+                      {/* Total row */}
+                      <tr className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform">
+                        <td className="px-6 py-2">Total</td>
+                        <td className="px-6 py-2">All Districts</td>
+                        {districtData.totalRow.standardCounts.map(
+                          (total, idx) => (
+                            <td key={idx} className="px-6 py-2">
+                              {total}
+                            </td>
+                          )
+                        )}
+                        <td className="px-6 py-2">
+                          {districtData.totalRow.totalForDistrict}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
-        </>
+    </>
   );
 }

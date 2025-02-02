@@ -55,7 +55,6 @@ export default function AddTaluka() {
   return (
     <div className={styles.containers}>
       <ToastContainer />
-      <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl border">
         <div className={styles.container}>
           <label htmlFor="district" className={styles.label}>
             Select District
@@ -68,7 +67,7 @@ export default function AddTaluka() {
               required
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className=" block w-max border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option>Select</option>
               {districts.map((district) => (
@@ -91,8 +90,8 @@ export default function AddTaluka() {
               required
               value={taluka}
               onChange={(e) => setTaluka(e.target.value)}
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
-              placeholder="Enter Taluka Name"
+              className=" block w-max border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+           placeholder="Enter Taluka Name"
             />
           </div>
         </div>
@@ -102,7 +101,6 @@ export default function AddTaluka() {
             Add Taluka
           </button>
         </div>
-      </div>
     </div>
   );
 }

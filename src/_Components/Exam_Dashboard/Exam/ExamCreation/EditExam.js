@@ -119,7 +119,8 @@ export default function EditExam({ props, fetchData1 }) {
                         setError(null);
                       }}
                       required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                     className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+
                       placeholder="Enter Exam Name"
                     />
                     {error && (
@@ -145,7 +146,7 @@ export default function EditExam({ props, fetchData1 }) {
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       required
-                      className="block rounded-lg w-full border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                      className="block rounded-lg w-full border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-3 m-10"
                       placeholder="Enter Exam date"
                     />
                     {error2 && (
@@ -161,11 +162,11 @@ export default function EditExam({ props, fetchData1 }) {
                 </div>
                 
                 <div className={styles.container}>
-                  <div className={styles.label}>Standards</div>
-                  <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <div className="p-6">Standards</div>
+                  <table className="w-full text-sm text-left rtl:text-right text-black">
+                    <thead className="text-xs text-black uppercase bg-gray-50">
                       <tr>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 mx-6 py-3">
                           Standard
                         </th>
                         {classes.map((cls) => (
@@ -200,6 +201,7 @@ export default function EditExam({ props, fetchData1 }) {
                   </table>
                 </div>
               </div>
+              <div className="p-4">
                 <button
                   type="button"
                   onClick={submit}
@@ -207,6 +209,7 @@ export default function EditExam({ props, fetchData1 }) {
                 >
                   Save
                 </button>
+              </div>
               <div className={styles.dialogFooter}>
                 <button
                   type="button"

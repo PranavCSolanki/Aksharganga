@@ -57,7 +57,6 @@ export default function AddCenter() {
   }, [district]);
 
   const handleSubmit = async () => {
-
     if (
       district === "" ||
       taluka === "" ||
@@ -66,8 +65,6 @@ export default function AddCenter() {
     ) {
       toast.error("Please fill all the fields");
     } else {
-      
-      
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_HOST}/api/master/center`,
@@ -87,108 +84,103 @@ export default function AddCenter() {
       } catch (error) {
         console.error("Error making request:", error);
       }
-      
     }
   };
 
   return (
     <div className={styles.containers}>
       <ToastContainer />
-      <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl border transition-transform transform">
-        <div className={styles.container}>
-          <label htmlFor="district" className={styles.label}>
-            Select District
-          </label>
-          <div className={styles.relative}>
+
+      <div className={styles.container}>
+        <label htmlFor="district" className={styles.label}>
+          Select District
+        </label>
+        <div className={styles.relative}>
+          <select
+            id="district"
+            name="district"
+            autoComplete="district-name"
+            required
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+          >
+            <option>Select</option>
+            {districts.map((dist) => (
+              <option key={dist._id} value={dist.distName}>
+                {dist.distName}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className={styles.container}>
+        <label htmlFor="Taluka" className={styles.label}>
+          Select Taluka
+        </label>
+        <div className={styles.relative}>
+          <select
+            id="Taluka"
+            name="Taluka"
+            autoComplete="Taluka-name"
+            value={taluka}
+            onChange={(e) => setTaluka(e.target.value)}
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+          >
+            <option>Select</option>
+            {talukas.map((tal) => (
+              <option key={tal._id} value={tal.TalukaName}>
+                {tal.TalukaName}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className={styles.container}>
+        <label htmlFor="Co-Ordinator" className={styles.label}>
+          Select Co-Ordinator
+        </label>
+        <div className={styles.relative}>
+          {coordinators && Array.isArray(coordinators) && (
             <select
-              id="district"
-              name="district"
-              autoComplete="district-name"
-              required
-              value={district}
-              onChange={(e) => setDistrict(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              id="Co-Ordinator"
+              name="Co-Ordinator"
+              autoComplete="Co-Ordinator-name"
+              value={coordinator}
+              onChange={(e) => setCoordinator(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option>Select</option>
-              {districts.map((dist) => (
-                <option key={dist._id} value={dist.distName}>
-                  {dist.distName}
+              {coordinators.map((co) => (
+                <option key={co._id} value={`${co.FirstName} ${co.LastName}`}>
+                  {`${co.FirstName} ${co.LastName}`}
                 </option>
               ))}
             </select>
-          </div>
+          )}
         </div>
-        <div className={styles.container}>
-          <label htmlFor="Taluka" className={styles.label}>
-            Select Taluka
-          </label>
-          <div className={styles.relative}>
-            <select
-              id="Taluka"
-              name="Taluka"
-              autoComplete="Taluka-name"
-              value={taluka}
-              onChange={(e) => setTaluka(e.target.value)}
-              className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option>Select</option>
-              {talukas.map((tal) => (
-                <option key={tal._id} value={tal.TalukaName}>
-                  {tal.TalukaName}
-                </option>
-              ))}
-            </select>
-          </div>
+      </div>
+      <div className={styles.container}>
+        <label htmlFor="name" className={styles.label}>
+          Enter Center Name
+        </label>
+        <div className={styles.relative}>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            value={centerName}
+            onChange={(e) => setCenterName(e.target.value)}
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            placeholder="Enter Center Name"
+          />
         </div>
-        <div className={styles.container}>
-          <label htmlFor="Co-Ordinator" className={styles.label}>
-            Select Co-Ordinator
-          </label>
-          <div className={styles.relative}>
-            {coordinators && Array.isArray(coordinators) && (
-              <select
-                id="Co-Ordinator"
-                name="Co-Ordinator"
-                autoComplete="Co-Ordinator-name"
-                value={coordinator}
-                onChange={(e) => setCoordinator(e.target.value)}
-                className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option>Select</option>
-                {coordinators.map((co) => (
-                  <option
-                    key={co._id}
-                    value={`${co.FirstName} ${co.LastName}`}
-                  >
-                    {`${co.FirstName} ${co.LastName}`}
-                  </option>
-                ))}
-              </select>
-            )}
-          </div>
-        </div>
-        <div className={styles.container}>
-          <label htmlFor="name" className={styles.label}>
-            Enter Center Name
-          </label>
-          <div className={styles.relative}>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              value={centerName}
-              onChange={(e) => setCenterName(e.target.value)}
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
-              placeholder="Enter Center Name"
-            />
-          </div>
-        </div>
-        <div className="btnwrapper">
-          <button className={styles.button} onClick={handleSubmit}>
-            Add Center
-          </button>
-        </div>
+      </div>
+      <div className="btnwrapper">
+        <button className={styles.button} onClick={handleSubmit}>
+          Add Center
+        </button>
       </div>
     </div>
   );

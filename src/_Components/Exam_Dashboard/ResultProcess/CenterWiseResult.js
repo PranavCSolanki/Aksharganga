@@ -20,7 +20,6 @@ export default function CenterWiseResult() {
   const [column, setColumn] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
 
-  
   const [exam, setExam] = useState("");
   const [exams, setExams] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -30,7 +29,7 @@ export default function CenterWiseResult() {
   const [centers, setCenters] = useState([]);
   const [selectedCenter, setSelectedCenter] = useState("");
   const [data, setData] = useState([]);
-  
+
   const fetchDistrict = async () => {
     try {
       const response = await axios.get(
@@ -104,8 +103,6 @@ export default function CenterWiseResult() {
     }
   }, [taluka]);
 
- 
-
   const filteredDistricts = data
     .filter((data) =>
       data.StudentName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -178,18 +175,16 @@ export default function CenterWiseResult() {
     return pageNumbers;
   };
 
-
   const handleSearch = async () => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_HOST}/api/result/uploadresult?district=${district}&taluka=${taluka}&center=${selectedCenter}&exam=${exam}&cls=${selectedClass}`
       );
-  
+
       if (response.data.success && Array.isArray(response.data.data)) {
         toast.success(response.data.message || "Data fetched successfully!");
         setData(response.data.data);
         setColumn(response.data.columns);
-        
       } else {
         toast.error(response.data.message || "No data found!");
         setData([]); // Ensure table clears when no data is found
@@ -199,18 +194,24 @@ export default function CenterWiseResult() {
       console.error("Error fetching data:", error);
     }
   };
-  
-  const DeleteResult = async (exam, district, taluka, selectedCenter, selectedClass) => {
+
+  const DeleteResult = async (
+    exam,
+    district,
+    taluka,
+    selectedCenter,
+    selectedClass
+  ) => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete the results for Center: ${selectedCenter}, Class: ${selectedClass}? This action cannot be undone.`
     );
-  
+
     if (confirmDelete) {
       try {
         const response = await axios.delete(
           `${process.env.NEXT_PUBLIC_HOST}/api/result/uploadresult?district=${district}&taluka=${taluka}&center=${selectedCenter}&exam=${exam}&cls=${selectedClass}`
         );
-  
+
         if (response.data.success) {
           toast.success(response.data.message || "Data deleted successfully!");
           setData([]); // Clear the table
@@ -224,46 +225,54 @@ export default function CenterWiseResult() {
     }
   };
 
-  const handlePdfDownload = async (exam, center,district,taluka,selectedClass) => {
+  const handlePdfDownload = async (
+    exam,
+    center,
+    district,
+    taluka,
+    selectedClass
+  ) => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/result?district=${district}&taluka=${taluka}&center=${center}&exam=${exam}&standard=${selectedClass}`, {}, 
-          {
-            responseType: 'blob', // Important for handling binary data
-            headers: {
-                'Accept': 'application/pdf',
-            }
-        });
-
-        if (response.status !== 200) {
-            throw new Error('Failed to download PDF file');
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/result?district=${district}&taluka=${taluka}&center=${center}&exam=${exam}&standard=${selectedClass}`,
+        {},
+        {
+          responseType: "blob", // Important for handling binary data
+          headers: {
+            Accept: "application/pdf",
+          },
         }
+      );
 
-        const blob = response.data; // Retrieve the blob containing the PDF data
-      
-        if (!(blob instanceof Blob)) {
-            throw new Error('Response is not a valid Blob');
-        }
+      if (response.status !== 200) {
+        throw new Error("Failed to download PDF file");
+      }
 
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = `${center}_${exam}.pdf`; // File name with .pdf extension
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(downloadUrl);
-        toast.success("File Downloaded Successfully");
+      const blob = response.data; // Retrieve the blob containing the PDF data
+
+      if (!(blob instanceof Blob)) {
+        throw new Error("Response is not a valid Blob");
+      }
+
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `${center}_${exam}.pdf`; // File name with .pdf extension
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+      toast.success("File Downloaded Successfully");
     } catch (error) {
-        console.error('Error downloading PDF file:', error);
+      console.error("Error downloading PDF file:", error);
     }
-};
+  };
 
   return (
     <>
       <ToastContainer />
       <div className={styles.heading2}>Center Wise Result</div>
       <div className={styles.containers}>
-        <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border  transition-transform transform ">
         <div className={styles.container}>
           <label htmlFor="exam" className={styles.label}>
             Select Exam
@@ -276,7 +285,7 @@ export default function CenterWiseResult() {
               required
               value={exam}
               onChange={(e) => setExam(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {exams.map((exm) => (
@@ -290,7 +299,7 @@ export default function CenterWiseResult() {
 
         <div className={styles.container}>
           <label htmlFor="district" className={styles.label}>
-            Select District 
+            Select District
           </label>
           <div className={styles.relative}>
             <select
@@ -300,7 +309,7 @@ export default function CenterWiseResult() {
               required
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {districts.map((dist) => (
@@ -323,7 +332,7 @@ export default function CenterWiseResult() {
               autoComplete="Taluka-name"
               value={taluka}
               onChange={(e) => setTaluka(e.target.value)}
-              className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {talukas.map((tal) => (
@@ -346,7 +355,7 @@ export default function CenterWiseResult() {
               autoComplete="Co-Ordinator-name"
               value={selectedCenter}
               onChange={(e) => setSelectedCenter(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {centers.map((centr) =>
@@ -372,7 +381,7 @@ export default function CenterWiseResult() {
               required
               value={selectedClass}
               onChange={(e) => setSelectedClass(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {classes.map((cls) => (
@@ -388,27 +397,36 @@ export default function CenterWiseResult() {
           </div>
         </div>
 
-          <div className="btnwrapper">
-            <button type="submit" onClick={handleSearch} className={styles.button}>
-              Search
+        <div className="btnwrapper">
+          <button
+            type="submit"
+            onClick={handleSearch}
+            className={styles.button}
+          >
+            Search
+          </button>
+        </div>
+      </div>
+      <div className={`${styles.containers}  p-8 rounded-lg shadow-2xl`}>
+        <div className="mb-7" style={{ marginBottom: "10px" }}>
+          <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
+            <button
+              className="relative bg-opacity-30  p-2 rounded-full  text-center flex items-center justify-center transition-transform duration-300 transform hover:scale-105"
+              style={{ backgroundColor: "pink", border: "1px solid red" }}
+              onClick={() =>
+                handlePdfDownload(
+                  exam,
+                  selectedCenter,
+                  district,
+                  taluka,
+                  selectedClass
+                )
+              }
+            >
+              <FaPrint className="text-black text-lg m-2" />
             </button>
           </div>
         </div>
-      </div>
-      <div
-        className={`${styles.containers}  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
-      >
-        <div className="mb-7" style={{ marginBottom: "10px" }}>
-                      <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
-                        <button
-                          className="relative bg-opacity-30  p-2 rounded-full  text-center flex items-center justify-center transition-transform duration-300 transform hover:scale-105"
-                          style={{ backgroundColor: "pink", border: "1px solid red" }}
-                          onClick={() =>handlePdfDownload(exam,selectedCenter,district,taluka,selectedClass)}
-                        >
-                          <FaPrint className="text-black text-lg m-2" />
-                        </button>
-                      </div>
-                    </div>
         <div
           className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
         >
@@ -447,70 +465,50 @@ export default function CenterWiseResult() {
               </select>
             </div>
           </div>
-      
+
           <div className={styles.tab}>
-  <table className="w-full my-2 text-sm text-left rtl:text-right text-black border-collapse">
-    <thead className="text-xs my-2 rounded-lg">
-      <tr className="bg-slate-200">
-        {/* Dynamically render column headers */}
-        {column.map((name) => (
-          <th scope="col" key={name} className="px-6 py-3 capitalize border-b">
-            {name}
-          </th>
-        ))}
-      </tr>
-    </thead>
-    <tbody className={styles.tbodys}>
-  {currentDistricts.map((dat, index) => (
-    <tr
-      key={dat.RollNo}
-      className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform"
-    >
-      
-          <td className="px-6 py-2">
-            {dat.SrNo}
-          </td>
-          <td className="px-6 py-2">
-            {dat.RollNo}
-          </td>
-          <td className="px-6 py-2">
-            {dat.StudentName}
-          </td>
-          <td className="px-6 py-2">
-            {dat.Standard}
-          </td>
-          <td className="px-6 py-2">
-            {dat.Medium}
-          </td>
-          <td className="px-6 py-2">
-            {dat.school}
-          </td>
-          <td className="px-6 py-2">
-            {dat.Paper1}
-      </td>
-     
-      {column.includes('Paper2') ? (
-  <>
-    <td className="px-6 py-2">{dat.Paper2}</td>
-    <td className="px-6 py-2">{dat.total}</td>
-  </>
-) : (
-  <td className="px-6 py-2">{dat.total}</td>
-)}
+            <table className="w-full my-2 text-sm text-left rtl:text-right text-black border-collapse">
+              <thead className="text-xs my-2 rounded-lg">
+                <tr className="bg-slate-200">
+                  {/* Dynamically render column headers */}
+                  {column.map((name) => (
+                    <th
+                      scope="col"
+                      key={name}
+                      className="px-6 py-3 capitalize border-b"
+                    >
+                      {name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className={styles.tbodys}>
+                {currentDistricts.map((dat, index) => (
+                  <tr
+                    key={dat.RollNo}
+                    className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform"
+                  >
+                    <td className="px-6 py-2">{dat.SrNo}</td>
+                    <td className="px-6 py-2">{dat.RollNo}</td>
+                    <td className="px-6 py-2">{dat.StudentName}</td>
+                    <td className="px-6 py-2">{dat.Standard}</td>
+                    <td className="px-6 py-2">{dat.Medium}</td>
+                    <td className="px-6 py-2">{dat.school}</td>
+                    <td className="px-6 py-2">{dat.Paper1}</td>
 
-          
-        
-      
-    </tr>
-  ))}
-</tbody>
-
-
-
-  </table>
-</div>
-
-       
+                    {column.includes("Paper2") ? (
+                      <>
+                        <td className="px-6 py-2">{dat.Paper2}</td>
+                        <td className="px-6 py-2">{dat.total}</td>
+                      </>
+                    ) : (
+                      <td className="px-6 py-2">{dat.total}</td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="flex justify-between items-center mt-4">
             <button
@@ -536,14 +534,16 @@ export default function CenterWiseResult() {
         </div>
       </div>
       <div className="btnwrapper">
-            <button
-              type="submit"
-              className={styles.button1}
-              onClick={() => DeleteResult(exam,district, taluka, selectedCenter,selectedClass)}
-            >
-              Clear List
-            </button>
-          </div>
+        <button
+          type="submit"
+          className={styles.button1}
+          onClick={() =>
+            DeleteResult(exam, district, taluka, selectedCenter, selectedClass)
+          }
+        >
+          Clear List
+        </button>
+      </div>
     </>
   );
 }

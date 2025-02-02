@@ -8,7 +8,7 @@ import {
   FaPrint,
 } from "react-icons/fa";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function District() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,13 +67,13 @@ export default function District() {
 
   const filteredDistricts = data
     .filter((district) =>
-      district.StudentName.toLowerCase().includes(searchTerm.toLowerCase())
+      district.studentName.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       if (sortOrder === "ascending") {
-        return a.StudentName.localeCompare(b.StudentName);
+        return a.studentName.localeCompare(b.studentName);
       } else if (sortOrder === "descending") {
-        return b.StudentName.localeCompare(a.StudentName);
+        return b.studentName.localeCompare(a.studentName);
       }
       return 0;
     });
@@ -149,13 +149,16 @@ export default function District() {
         }
       );
 
+      console.log("response", response);
+      console.log("data", response.data);
+
       // Validate the response structure
-      if (response.Success && Array.isArray(response.data)) {
+      if (response.data.Success) {
         setSee(true);
         const fetchedData = response.data.data;
         const fetchedColumns = response.data.columns;
 
-        toast.success(response.message || "Data fetched successfully!");
+        toast.success(response.data.message || "Data fetched successfully!");
 
         setData(fetchedData);
         setColumn(fetchedColumns);
@@ -213,6 +216,7 @@ export default function District() {
 
   return (
     <>
+      <ToastContainer />
       <div className={styles.heading2}>District Level Rank</div>
       <div className={styles.containers}>
         <div className={styles.container}>
@@ -227,7 +231,7 @@ export default function District() {
               required
               value={exam}
               onChange={(e) => setExam(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {exams.map((exm) => (
@@ -251,7 +255,7 @@ export default function District() {
               required
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {districts.map((dist) => (
@@ -275,7 +279,7 @@ export default function District() {
               required
               value={selectedClass}
               onChange={(e) => setSelectedClass(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {classes.map((cls) => (
@@ -303,7 +307,7 @@ export default function District() {
       </div>
       {see ? (
         <div
-          className={`${styles.containers}  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
+          className={`${styles.containers}  p-8 rounded-lg shadow-2xl`}
         >
           <div className="mb-7" style={{ marginBottom: "10px" }}>
             <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
@@ -375,17 +379,17 @@ export default function District() {
                   {currentDistricts.map((dat, index) => (
                     <tr
                       key={dat.id}
-                      className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform "
+                      className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform "
                     >
                       <td className="px-6 py-2">
                         {indexOfFirstItem + index + 1}
                       </td>
 
-                      <td className="px-6 py-2">{dat.RollNo}</td>
-                      <td className="px-6 py-2">{dat.StudentName}</td>
-                      <td className="px-6 py-2">{dat.Standard}</td>
+                      <td className="px-6 py-2">{dat.rollNo}</td>
+                      <td className="px-6 py-2">{dat.studentName}</td>
+                      <td className="px-6 py-2">{dat.standard}</td>
                       <td className="px-6 py-2">{dat.medium}</td>
-                      <td className="px-6 py-2">{dat.school}</td>
+                      <td className="px-6 py-2">{dat.schoolName}</td>
                       <td className="px-6 py-2">{dat.center}</td>
                       <td className="px-6 py-2">{dat.taluka}</td>
                       {dat.subjects.map((sub) => (

@@ -12,7 +12,7 @@ export default function CoOrdinator() {
 
   return (
     <div className="container mx-auto p-6">
-      <div className="flex space-x-4 border-b-2 border-gray-300 mb-6">
+      <div className="flex space-x-4  border-gray-300 mb-6">
         <button
           onClick={() => handleTabClick("tab1")}
           className={`${
@@ -31,11 +31,11 @@ export default function CoOrdinator() {
         </button>
         <div className=" ml-20 text-center  ">
           {activeTab === "tab1" ? (
-            <div className="text-2xl font-semibold text-transparent bg-clip-text ">
+            <div className="text-2xl font-semibold  bg-clip-text ">
               Add Co-Ordinator
             </div>
           ) : (
-            <div className="text-2xl font-semibold text-transparent bg-clip-text ">
+            <div className="text-2xl font-semibold  bg-clip-text ">
               See All Co-Ordinator`s List
             </div>
           )}

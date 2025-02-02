@@ -39,7 +39,8 @@ export default function AddDistrict() {
     <>
       <ToastContainer />
     <div className={styles.containers}>
-      <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border ">
+        <div className=" mx-auto p-10 rounded-2xl">
+          <h1 className={styles.heading2}>Add District</h1>
         <div className={styles.container}>
           <label htmlFor="name" className={styles.label}>
             Enter District Name
@@ -52,7 +53,8 @@ export default function AddDistrict() {
               value={District}
               onChange={(e) => SetDistrict(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+
               placeholder="Enter District Name"
             />
             {Error ? (

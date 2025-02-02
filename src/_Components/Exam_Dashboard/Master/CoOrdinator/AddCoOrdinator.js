@@ -8,9 +8,8 @@ export default function AddCoOrdinator() {
   const [mob, setMob] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  
+
   const SubmitData = async () => {
-  
     if (
       fname === "" ||
       lname === "" ||
@@ -20,43 +19,39 @@ export default function AddCoOrdinator() {
     ) {
       toast.error("Please fill all the fields");
     } else {
-  
-        try {
-          const trimmedFname = fname.trim();
-          const trimmedLname = lname.trim();
-          const trimmedMob = mob.trim();
-          const trimmedAddress = address.trim();
-          const trimmedEmail = email.trim();
-  
-          const { data } = await axios.post(
-            `${process.env.NEXT_PUBLIC_HOST}/api/master/coordinator`,
-            {
-              fname: trimmedFname,
-              lname: trimmedLname,
-              mob: trimmedMob,
-              address: trimmedAddress,
-              email: trimmedEmail,
-            }
-          );
-  
-          if (data?.success) {
-            toast.success("Co-Ordinator added successfully!");
-          } else {
-            toast.error(data?.message || "Co-Ordinator already exists");
+      try {
+        const trimmedFname = fname.trim();
+        const trimmedLname = lname.trim();
+        const trimmedMob = mob.trim();
+        const trimmedAddress = address.trim();
+        const trimmedEmail = email.trim();
+
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_HOST}/api/master/coordinator`,
+          {
+            fname: trimmedFname,
+            lname: trimmedLname,
+            mob: trimmedMob,
+            address: trimmedAddress,
+            email: trimmedEmail,
           }
-        } catch (error) {
-          toast.error("Error posting data: " + error.message);
+        );
+
+        if (data?.success) {
+          toast.success("Co-Ordinator added successfully!");
+        } else {
+          toast.error(data?.message || "Co-Ordinator already exists");
         }
-      
+      } catch (error) {
+        toast.error("Error posting data: " + error.message);
+      }
     }
   };
-  
-
 
   return (
     <div className={styles.containers}>
       <ToastContainer />
-      <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border  ">
+      <div className="mt-5 max-w-3xl mx-auto p-5 rounded-3xl">
         <div className={styles.container}>
           <label htmlFor="name" className={styles.label}>
             Enter Co-Ordinator First Name
@@ -69,7 +64,7 @@ export default function AddCoOrdinator() {
               onChange={(e) => setFname(e.target.value)}
               type="text"
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               placeholder="Fisrt Name"
             />
           </div>
@@ -86,7 +81,7 @@ export default function AddCoOrdinator() {
               value={lname}
               onChange={(e) => setLname(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               placeholder="Last Name"
             />
           </div>
@@ -103,7 +98,7 @@ export default function AddCoOrdinator() {
               value={mob}
               onChange={(e) => setMob(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               placeholder="Mobile"
             />
           </div>
@@ -121,7 +116,7 @@ export default function AddCoOrdinator() {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               placeholder="Address"
             />
           </div>
@@ -139,17 +134,14 @@ export default function AddCoOrdinator() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               placeholder=" email"
             />
           </div>
         </div>
 
         <div className="btnwrapper ">
-          <button
-            className={styles.button}
-            onClick={() => SubmitData()}
-          >
+          <button className={styles.button} onClick={() => SubmitData()}>
             Add Co-Ordinator
           </button>
         </div>

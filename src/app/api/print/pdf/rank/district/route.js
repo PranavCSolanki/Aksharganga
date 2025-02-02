@@ -1,36 +1,39 @@
-import axios from 'axios';
-import { NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+import axios from "axios";
+import { NextResponse } from "next/server";
+import puppeteer from "puppeteer";
 
 export async function POST(req) {
-    try {
-        const { searchParams } = new URL(req.url);
+  try {
+    const { searchParams } = new URL(req.url);
 
-        const exam = searchParams.get("exam");
-        const standard = searchParams.get("standard");
-        const district = searchParams.get("district");
+    const exam = searchParams.get("exam");
+    const standard = searchParams.get("standard");
+    const district = searchParams.get("district");
 
-        // Make a POST request to another API
-        const getResponse = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/rank/displayrank/district`, {
-            exam: exam,
-            standard: standard,
-            district: district
-        });
+    // Make a POST request to another API
+    const getResponse = await axios.post(
+      `${process.env.NEXT_PUBLIC_HOST}/api/rank/displayrank/district`,
+      {
+        exam: exam,
+        standard: standard,
+        district: district,
+      }
+    );
 
-        // Handle the GET response
-        if (getResponse.status === 200) {
-            const responseData = getResponse.data;
-            let data = responseData.data; // Actual JSON data
-            const columns = responseData.columns; // Columns
+    // Handle the GET response
+    if (getResponse.status === 200) {
+      const responseData = getResponse.data;
+      let data = responseData.data; // Actual JSON data
+      const columns = responseData.columns; // Columns
 
-            // Check if data is an array, if not, log an error
-            if (!Array.isArray(data)) {
-                console.error("Data is not an array:", data);
-                data = []; // Default to an empty array to prevent further errors
-            }
+      // Check if data is an array, if not, log an error
+      if (!Array.isArray(data)) {
+        console.error("Data is not an array:", data);
+        data = []; // Default to an empty array to prevent further errors
+      }
 
-            // Generate HTML content for the PDF
-            let html = `
+      // Generate HTML content for the PDF
+      let html = `
             <html>
                 <head>
                     <style>
@@ -87,72 +90,77 @@ export async function POST(req) {
                         <thead>
                             <tr>`;
 
-            // Dynamically create table headers based on columns
-            columns.forEach(column => {
-                html += `<th>${column.headerName}</th>`;
-            });
+      // Dynamically create table headers based on columns
+      columns.forEach((column) => {
+        html += `<th>${column.headerName}</th>`;
+      });
 
-            html += `</tr>
+      html += `</tr>
                         </thead>
                         <tbody>`;
 
-                        data.forEach((item, index) => {
-                            html += `<tr>
+      data.forEach((item, index) => {
+        html += `<tr>
                                 <td>${index + 1}</td>
-                                <td>${item.RollNo || '-'}</td>
-                                <td>${item.StudentName || '-'}</td>
-                                <td>${item.Standard || '-'}</td>
-                                <td>${item.medium || '-'}</td>
-                                <td>${item.school || '-'}</td>
-                                <td>${item.center || '-'}</td>
-                                <td>${item.taluka || '-'}</td>`;
-                        
-                            item.subjects.forEach((subject) => {
-                                html += `<td>${subject.marks || '-'}</td>`;
-                            });
-                        
-                            html += `<td>${item.totalMarks || '-'}</td>
-                                <td>${item.rank || '-'}</td>
+                                <td>${item.rollNo || "-"}</td>
+                                <td>${item.studentName || "-"}</td>
+                                <td>${item.standard || "-"}</td>
+                                <td>${item.medium || "-"}</td>
+                                <td>${item.schoolName || "-"}</td>
+                                <td>${item.center || "-"}</td>
+                                <td>${item.taluka || "-"}</td>`;
+
+        item.subjects.forEach((subject) => {
+          html += `<td>${subject.marks || "-"}</td>`;
+        });
+
+        html += `<td>${item.totalMarks || "-"}</td>
+                                <td>${item.rank || "-"}</td>
                             </tr>`;
-                        });
-                        
-                        
-            html += `
+      });
+
+      html += `
                         </tbody>
                     </table>
                 </body>
             </html>`;
 
-            // Launch puppeteer and create a PDF
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
-            await page.setContent(html);
-            const pdfBuffer = await page.pdf({
-                format: 'A4',
-                landscape: true,
-                margin: { top: '20px', bottom: '20px', left: '20px', right: '20px' }
-            });
-            await browser.close();
+      // Launch puppeteer and create a PDF
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
+      await page.setContent(html);
+      const pdfBuffer = await page.pdf({
+        format: "A4",
+        landscape: true,
+        margin: { top: "20px", bottom: "20px", left: "20px", right: "20px" },
+      });
+      await browser.close();
 
-            // Return PDF as response
-            return new NextResponse(pdfBuffer, {
-                headers: {
-                    'Content-Disposition': `attachment; filename="${standard}_${exam}.pdf"`,
-                    'Content-Type': 'application/pdf',
-                    'Content-Length': pdfBuffer.length.toString(),
-                },
-            });
-        } else {
-            return NextResponse.json({
-                success: false,
-                message: 'Failed to fetch data from the GET API',
-            }, { status: getResponse.status });
-        }
-    } catch (error) {
-        return NextResponse.json({
-            success: false,
-            message: 'An error occurred while processing your request',
-            error: error.message,
-        }, { status: 500 });
+      // Return PDF as response
+      return new NextResponse(pdfBuffer, {
+        headers: {
+          "Content-Disposition": `attachment; filename="${standard}_${exam}.pdf"`,
+          "Content-Type": "application/pdf",
+          "Content-Length": pdfBuffer.length.toString(),
+        },
+      });
+    } else {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Failed to fetch data from the GET API",
+        },
+        { status: getResponse.status }
+      );
     }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "An error occurred while processing your request",
+        error: error.message,
+      },
+      { status: 500 }
+    );
+  }
 }

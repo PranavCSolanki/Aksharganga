@@ -85,7 +85,8 @@ export default function EditClass({ props, fetchData1 }) {
                         setError(null);
                       }}
                       required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                     className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+
                       placeholder="Enter Class Name"
                     />
                     {error && (
@@ -114,7 +115,8 @@ export default function EditClass({ props, fetchData1 }) {
                         setErrorid(null);
                       }}
                       required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                     className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+
                       placeholder="Enter Class ID"
                     />
                     {errorid && (

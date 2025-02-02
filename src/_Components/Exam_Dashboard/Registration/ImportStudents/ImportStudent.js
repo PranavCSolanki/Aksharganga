@@ -136,11 +136,10 @@ export default function ImportStudent() {
   return (
     <>
       <ToastContainer />
-    <div className="px-6 py-12 lg:px-8 rounded-3xl shadow-2xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+    <div className="px-6 py-12 lg:px-8 rounded-3xl shadow-2xl">
       <div className={styles.heading2}>Import Student Excel List</div>
       <div className={styles.containers}>
-        <div className="mt-12 mb-20 max-w-lg mx-auto p-10 rounded-2xl  border-indigo-600 shadow-2xl bg-white">
-          <div className="p-6">
+        
           <div className={styles.container}>
               <label htmlFor="exam" className={styles.label}>
                 Select Exam
@@ -153,7 +152,7 @@ export default function ImportStudent() {
                   required
                   value={exam}
                   onChange={(e) => setExam(e.target.value)}
-                  className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                 className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
                 >
                   <option value="">Select</option>
                   {exams.map((exm) => (
@@ -177,7 +176,7 @@ export default function ImportStudent() {
                   required
                   value={district}
                   onChange={(e) => setDistrict(e.target.value)}
-                  className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                 className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
                 >
                   <option value="">Select</option>
                   {districts.map((dist) => (
@@ -200,8 +199,8 @@ export default function ImportStudent() {
                   autoComplete="Taluka-name"
                   value={taluka}
                   onChange={(e) => setTaluka(e.target.value)}
-                  className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
+                  className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+                 >
                   <option value="">Select</option>
                   {talukas.map((tal) => (
                     <option key={tal._id} value={tal.taluka}>
@@ -223,7 +222,7 @@ export default function ImportStudent() {
                   autoComplete="Co-Ordinator-name"
                   value={selectedCenter}
                   onChange={(e) => setSelectedCenter(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
                 >
                   <option value="">Select</option>
                   {centers.map((centr) =>
@@ -253,14 +252,12 @@ export default function ImportStudent() {
 
             <div className={styles.container}>
               <div className={styles.label}></div>
-              <div className={styles.label}>
+              <div className={styles.label} >
                 <p className={styles.relative}>
                   <span style={{color:"red"}}>Only Excel, CSV, or TSV Files Accepted</span>
                 </p>
               </div>
             </div>
-          </div>
-        </div>
       </div>
 
       <button type="submit" className={styles.button} onClick={handleUpload}>

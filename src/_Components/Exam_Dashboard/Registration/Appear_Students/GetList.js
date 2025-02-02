@@ -356,7 +356,6 @@ export default function GetList() {
     <>
       <ToastContainer />
       <div className={styles.containers}>
-        <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border">
           <div className={styles.container}>
             <label htmlFor="exam" className={styles.label}>
               Select Exam
@@ -369,7 +368,7 @@ export default function GetList() {
                 required
                 value={exam}
                 onChange={(e) => setExam(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+               className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {exams.map((exm) => (
@@ -393,7 +392,7 @@ export default function GetList() {
                 required
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+               className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {districts.map((dist) => (
@@ -416,7 +415,7 @@ export default function GetList() {
                 autoComplete="Taluka-name"
                 value={taluka}
                 onChange={(e) => setTaluka(e.target.value)}
-                className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {talukas.map((tal) => (
@@ -439,8 +438,8 @@ export default function GetList() {
                 autoComplete="Co-Ordinator-name"
                 value={selectedCenter}
                 onChange={(e) => setSelectedCenter(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
+                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+             >
                 <option value="">Select</option>
                 {centers.map((centr) =>
                   centr.centers.map((item) => (
@@ -462,26 +461,25 @@ export default function GetList() {
               Get List
             </button>
           </div>
-        </div>
       </div>
 
       <div className={styles.containers}>
         <div
-          className="flex justify-center items-center m-6 p-6 bg-white rounded-xl border border-gray-200  transition-shadow duration-300 ease-in-out"
+          className="flex justify-center items-center  bg-white rounded-xl "
           style={{ marginBottom: "20px" }}
         >
-          <div className="text-3xl font-bold m-8 text-transparent bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text hover:from-red-400 hover:to-yellow-400 transition-colors duration-300 ease-in-out">
+          <div className="text-xl font-bold m-8  bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text hover:from-red-400 hover:to-yellow-400 transition-colors duration-300 ease-in-out">
             Exam :- {exam}
           </div>
         </div>
-        <div className="flex justify-between items-center mb-6 p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 ease-in-out">
-          <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text hover:from-blue-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
+        <div className="flex justify-between items-center  bg-white rounded-xl  ">
+          <div className="text-xl font-bold  bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text hover:from-blue-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
             Distrtict :- {district}
           </div>
-          <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-green-500 via-teal-500 to-blue-500 bg-clip-text hover:from-green-400 hover:to-blue-400 transition-colors duration-300 ease-in-out">
+          <div className="text-xl font-bold  bg-gradient-to-r from-green-500 via-teal-500 to-blue-500 bg-clip-text hover:from-green-400 hover:to-blue-400 transition-colors duration-300 ease-in-out">
             Taluka :- {taluka}
           </div>
-          <div className="text-5xl font-bold text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 bg-clip-text hover:from-pink-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
+          <div className="text-xl font-bold  bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 bg-clip-text hover:from-pink-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
             Center :- {selectedCenter}
           </div>
         </div>
@@ -606,7 +604,7 @@ export default function GetList() {
                 {currentDistricts.map((item, index) => (
                   <tr
                     key={item._id}
-                    className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform "
+                    className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform "
                   >
                     <td className="px-6 py-2">
                       {indexOfFirstItem + index + 1}

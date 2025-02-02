@@ -1,5 +1,7 @@
 "use client";
 
+import Centerwise from "@/_Components/Exam_Dashboard/AfterExam/CenterRank/CenterWise";
+import Certificate from "@/_Components/Exam_Dashboard/AfterExam/certificat/Certificate";
 import AnswerSheet from "@/_Components/Exam_Dashboard/BeforeExam/AnswerSheet";
 import AttendanceSheet from "@/_Components/Exam_Dashboard/BeforeExam/AttendanceSheet";
 import BenchSticker from "@/_Components/Exam_Dashboard/BeforeExam/BenchSticker";
@@ -12,6 +14,7 @@ import CoOrdinator from "@/_Components/Exam_Dashboard/Master/CoOrdinator/CoOrdin
 import DistMaster from "@/_Components/Exam_Dashboard/Master/dist-master/DistMaster";
 import SubjectMaster from "@/_Components/Exam_Dashboard/Master/Subject-master/SubjectMaster";
 import TalukaMaster from "@/_Components/Exam_Dashboard/Master/taluka-master/TalukaMaster";
+import EditMarks from "@/_Components/Exam_Dashboard/Other/EditMarks";
 import Publish from "@/_Components/Exam_Dashboard/publish/page";
 import Center from "@/_Components/Exam_Dashboard/Rank/Center/Center";
 import CenterRank from "@/_Components/Exam_Dashboard/Rank/CenterRank/CenterRank";
@@ -31,7 +34,6 @@ import StudResult from "@/_Components/Exam_Dashboard/Studentresult/StudResult";
 import { useState } from "react";
 import { FaChevronDown, FaChevronRight, FaBars } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
-
 
 export default function Dashboard() {
   const [sidebarToggle, setSidebarToggle] = useState(true);
@@ -94,12 +96,9 @@ export default function Dashboard() {
       ],
     },
     {
-      "Publish result": [
-        { name: "Publish", path: "/publish" },
-      ],
+      "Publish result": [{ name: "Publish", path: "/publish" }],
     },
-    
-    
+
     {
       "Display Rank ": [
         { name: "State Level ", path: "/staterank" },
@@ -108,29 +107,26 @@ export default function Dashboard() {
         { name: "Center (Rank Wise)", path: "/centerrankwise" },
       ],
     },
-    
+
     {
       "Print After Exam": [
-        { name: "Center Wise Result", path: "/centerwiseresult" },
-        { name: "Certificate", path: "/uploadresult" },
+        { name: "Center Wise Result", path: "/centerwise" },
+        { name: "Certificate", path: "/certificate" },
       ],
     },
-      
+
     {
-      "Student Result": [
-        { name: "Roll Number Wise", path: "/result" },
-      ],
+      "Student Result": [{ name: "Roll Number Wise", path: "/result" }],
     },
-    
+
     {
-      "Other": [
+      Other: [
         { name: "Messages", path: "" },
         { name: "Shift Center", path: "" },
-        { name: "Edit Marks", path: "" },
+        { name: "Edit Student", path: "/editmark" },
         { name: "Change Exam Date", path: "" },
       ],
     },
-      
   ];
 
   const handleSidebarToggle = () => {
@@ -167,7 +163,7 @@ export default function Dashboard() {
       case "/taluka-master":
         return <TalukaMaster />;
       case "/center-master":
-        return <CenterMaster/>;
+        return <CenterMaster />;
       case "/coordinator-master":
         return <CoOrdinator />;
       case "/class-master":
@@ -181,7 +177,7 @@ export default function Dashboard() {
       case "/registration":
         return <AddStudent />;
       case "/import-register":
-        return <ImportStudent/>;
+        return <ImportStudent />;
       case "/appear-student":
         return <CenterList />;
       case "/hallticket":
@@ -195,7 +191,7 @@ export default function Dashboard() {
       case "/district":
         return <SeeDistrictData />;
       case "/center":
-        return <DistCenter/>;
+        return <DistCenter />;
       case "/medium":
         return <SeeMedium />;
       case "/co-ordinator":
@@ -212,12 +208,18 @@ export default function Dashboard() {
         return <UploadResult />;
       case "/centerwiseresult":
         return <CenterWiseResult />;
+      case "/centerwise":
+        return <Centerwise />;
       case "/centerrankwise":
         return <CenterRank />;
       case "/result":
         return <StudResult />;
       case "/publish":
-        return <Publish/> ;
+        return <Publish />;
+      case "/certificate":
+        return <Certificate />;
+      case "/editmark":
+        return <EditMarks />;
       default:
         return <p>Please select a valid option from the sidebar.</p>;
     }

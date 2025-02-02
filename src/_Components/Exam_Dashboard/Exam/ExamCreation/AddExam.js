@@ -87,7 +87,6 @@ export default function AddExam() {
     e.preventDefault();
 
     const newExam = { name, standards: selectedStandards, date: date };
-    
 
     try {
       const response = await axios.post(
@@ -95,7 +94,6 @@ export default function AddExam() {
         newExam
       );
 
-      
       const data = response.data;
 
       if (data.success) {
@@ -129,29 +127,29 @@ export default function AddExam() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
                 placeholder="Enter Exam Name"
               />
             </div>
           </div>
 
           <div className={styles.container}>
-        <label htmlFor="date" className={styles.label}>
-          Exam Date
-        </label>
-        <div className={styles.relative}>
-          <input
-            id="date"
-            name="date"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-            className="block rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
-            placeholder="Enter Exam Name"
-          />
-        </div>
-      </div>
+            <label htmlFor="date" className={styles.label}>
+              Exam Date
+            </label>
+            <div className={styles.relative}>
+              <input
+                id="date"
+                name="date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                className="block rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                placeholder="Enter Exam Name"
+              />
+            </div>
+          </div>
 
           <div className={styles.container}>
             <label htmlFor="options" className={styles.label}>
@@ -160,17 +158,22 @@ export default function AddExam() {
           </div>
 
           <div className="container">
-            <ul className="grid grid-rows-4 gap-4">
+            <ul className="">
               {classes.map((tech) => (
                 <li
                   key={tech._id}
-                  className="relative p-6 mt-6 flex m-8 rounded-2xl border border-blue-300 hover:shadow-2xl hover:border-blue-500"
-                  style={{marginLeft:"100px",marginRight:"100px",marginTop:"50px",marginBottom:"50px"}}
+                  className="relative  flex"
+                  style={{
+                    marginLeft: "100px",
+                    marginRight: "100px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                  }}
                 >
                   <label
                     htmlFor={`${tech._id}-checkbox`}
                     className={styles.label}
-                    style={{marginRight:"50px",marginTop:"-1px"}}
+                    style={{ marginRight: "50px", marginTop: "23px" }}
                   >
                     <span className="transition-transform duration-300 ease-in-out group-hover:scale-105">
                       {tech.ClassName}
@@ -201,49 +204,49 @@ export default function AddExam() {
         {seeclass.map((item) => {
           return (
             <div key={item._id}>
-              <ul style={{display:"flex",justifyContent:"space-evenly"}}>
-              <li >
-                <div className="max-w-full overflow-x-auto">
-                  <div className="m-10">
-                    <div className="flex">
-                      <label
-                        htmlFor="-checkbox"
-                        className="w-28 m-6 text-gray-800 font-semibold text-xl space-x-4 group"
-                      >
-                        <span>Exam Name :</span>
-                      </label>
-                      <label
-                        htmlFor="-checkbox"
-                        className="w-28 m-6 text-gray-800 font-semibold text-xl space-x-4 group"
-                      >
-                        <span className="ml-9 ">{item.name}</span>
-                      </label>
+              <ul style={{ display: "flex", justifyContent: "space-between" }}>
+                <li>
+                  <div className="max-w-full overflow-x-auto">
+                    <div className="m-10">
+                      <div className="flex">
+                        <label
+                          htmlFor="-checkbox"
+                          className="m-6 text-gray-800 font-semibold text-xl space-x-4 group"
+                        >
+                          <span>Exam Name :</span>
+                        </label>
+                        <label
+                          htmlFor="-checkbox"
+                          className="m-6 text-gray-800 font-semibold text-xl space-x-4 group"
+                        >
+                          <span className="ml-9 ">{item.name}</span>
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="max-w-full overflow-x-auto">
-                  <div className="m-10">
-                    <div className="flex">
-                      <label
-                        htmlFor="-checkbox"
-                        className="w-28 m-6 text-gray-800 font-semibold text-xl space-x-4 group"
-                      >
-                        <span>Exam Date :</span>
-                      </label>
-                      <label
-                        htmlFor="-checkbox"
-                        className="w-28 m-6 text-gray-800 font-semibold text-xl space-x-4 group"
-                      >
-                        <span className="ml-9 ">{item.date}</span>
-                      </label>
+                  <div className="max-w-full overflow-x-auto">
+                    <div className="m-10">
+                      <div className="flex fle-justify-between">
+                        <label
+                          htmlFor="-checkbox"
+                          className=" m-6 text-gray-800 font-semibold text-xl space-x-4 group"
+                        >
+                          <span>Exam Date :</span>
+                        </label>
+                        <label
+                          htmlFor="-checkbox"
+                          className="m-6 text-gray-800 font-semibold text-xl space-x-4 group"
+                        >
+                          <span className="ml-9 ">{item.date}</span>
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-</ul>
+                </li>
+              </ul>
               <div className={styles.tab}>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right ">
+                  <thead className="text-xs text-black uppercase bg-gray-50  ">
                     <tr>
                       <th scope="col" className="px-6 py-3">
                         Standard

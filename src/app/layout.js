@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <meta
-      httpEquiv="Cache-Control"
+        httpEquiv="Cache-Control"
         content="no-store, no-cache, must-revalidate, proxy-revalidate"
       />
       <meta httpEquiv="Pragma" content="no-cache" />

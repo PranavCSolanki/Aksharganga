@@ -205,7 +205,7 @@ export default function UploadResult() {
               required
               value={exam}
               onChange={(e) => setExam(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {exams.map((exm) => (
@@ -229,7 +229,7 @@ export default function UploadResult() {
               required
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {districts.map((dist) => (
@@ -252,7 +252,7 @@ export default function UploadResult() {
               autoComplete="Taluka-name"
               value={taluka}
               onChange={(e) => setTaluka(e.target.value)}
-              className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {talukas.map((tal) => (
@@ -275,7 +275,7 @@ export default function UploadResult() {
               autoComplete="Co-Ordinator-name"
               value={selectedCenter}
               onChange={(e) => setSelectedCenter(e.target.value)}
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {centers.map((centr) =>
@@ -301,7 +301,7 @@ export default function UploadResult() {
               required
               value={selectedClass}
               onChange={(e) => setSelectedClass(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option value="">Select</option>
               {classes.map((cls) => (

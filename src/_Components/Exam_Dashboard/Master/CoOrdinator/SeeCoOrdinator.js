@@ -46,7 +46,6 @@ export default function SeeCoOrdinator() {
         `${process.env.NEXT_PUBLIC_HOST}/api/master/coordinator`
       );
       setCoOrdinator(response.data.data);
-     
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -59,8 +58,10 @@ export default function SeeCoOrdinator() {
   const filteredCoOrdinators = coOrdinators
     .filter((coOrdinator) => {
       return (
-        typeof coOrdinator.FirstName === "string" &&
-        coOrdinator.FirstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (typeof coOrdinator.FirstName === "string" &&
+          coOrdinator.FirstName.toLowerCase().includes(
+            searchTerm.toLowerCase()
+          )) ||
         coOrdinator.LastName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     })
@@ -131,12 +132,10 @@ export default function SeeCoOrdinator() {
 
     return pageNumbers;
   };
-  
+
   return (
-    <div
-      className={`${styles.containers}  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
-    >
-      <ToastContainer/>
+    <div className={`${styles.containers}  p-8 rounded-lg shadow-2xl`}>
+      <ToastContainer />
       <div
         className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
       >
@@ -207,31 +206,40 @@ export default function SeeCoOrdinator() {
               {currentCoOrdinators.map((coOrdinator, index) => (
                 <tr
                   key={coOrdinator.FirstName}
-                  className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform "
+                  className="bg-white border-b hover:bg-gray-50 transition ease-in-out duration-300 transform "
                 >
                   <td className="px-6 py-2">{indexOfFirstItem + index + 1}</td>
-                  <td className="px-6 py-2">{coOrdinator.FirstName } {coOrdinator.LastName}</td>
+                  <td className="px-6 py-2">
+                    {coOrdinator.FirstName} {coOrdinator.LastName}
+                  </td>
                   <td className="px-6 py-2">{coOrdinator.Address}</td>
                   <td className="px-6 py-2">{coOrdinator.Mobile1}</td>
                   <td className="px-6 py-2">{coOrdinator.email}</td>
                   <td className="px-6 py-2">{coOrdinator.Password}</td>
                   <td
-                      className="px-6 py-2 "
-                      style={{
-                        justifyContent: "center",
-                        display: "flex",
-                        borderTop: "none",
-                        borderLeft: "none",
-                      }}
+                    className="px-6 py-3"
+                    style={{
+                      justifyContent: "center",
+                      display: "flex",
+                      borderTop: "none",
+                      borderLeft: "none",
+                    }}
+                  >
+                    <EditCoOrdinator
+                      props={coOrdinator}
+                      fetchData1={fetchData}
+                    />
+                    <button
+                      className={styles.delete}
+                      onClick={() =>
+                        handleDelete(coOrdinator.FirstName, coOrdinator._id)
+                      }
                     >
-                    <EditCoOrdinator props={coOrdinator} fetchData1={fetchData}/>
-                    <button className={styles.delete} onClick={()=>handleDelete(coOrdinator.FirstName,coOrdinator._id)}>Delete</button>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
-
-
-
             </tbody>
           </table>
         </div>

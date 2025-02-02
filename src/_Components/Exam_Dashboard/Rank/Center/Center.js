@@ -106,13 +106,13 @@ export default function Center() {
 
   const filteredDistricts = data
     .filter((district) =>
-      district.StudentName.toLowerCase().includes(searchTerm.toLowerCase())
+      district.studentName.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       if (sortOrder === "ascending") {
-        return a.StudentName.localeCompare(b.StudentName);
+        return a.studentName.localeCompare(b.studentName);
       } else if (sortOrder === "descending") {
-        return b.StudentName.localeCompare(a.StudentName);
+        return b.studentName.localeCompare(a.studentName);
       }
       return 0;
     });
@@ -180,12 +180,10 @@ export default function Center() {
     try {
       // Fetch data from the API
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_HOST}/api/rank/centerrankwise/inner`,
+        `${process.env.NEXT_PUBLIC_HOST}/api/rank/displayrank/center`,
         {
           exam: exam,
-          district: district,
           center: selectedCenter,
-          taluka: taluka,
           standard: selectedClass,
         }
       );
@@ -261,146 +259,142 @@ export default function Center() {
       <ToastContainer />
       <div className={styles.heading2}>Center Level Rank</div>
       <div className={styles.containers}>
-        <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border  transition-transform transform ">
-          <div className={styles.container}>
-            <label htmlFor="exam" className={styles.label}>
-              Select Exam
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="exam"
-                name="exam"
-                autoComplete="exam-name"
-                required
-                value={exam}
-                onChange={(e) => setExam(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {exams.map((exm) => (
-                  <option key={exm._id} value={exm.name}>
-                    {exm.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="district" className={styles.label}>
-              Select District
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="district"
-                name="district"
-                autoComplete="district-name"
-                required
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {districts.map((dist) => (
-                  <option key={dist._id} value={dist._id}>
-                    {dist._id}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="Taluka" className={styles.label}>
-              Select Taluka
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="Taluka"
-                name="Taluka"
-                autoComplete="Taluka-name"
-                value={taluka}
-                onChange={(e) => setTaluka(e.target.value)}
-                className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {talukas.map((tal) => (
-                  <option key={tal._id} value={tal.taluka}>
-                    {tal.taluka}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="Co-Ordinator" className={styles.label}>
-              Select Exam Center
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="Co-Ordinator"
-                name="Co-Ordinator"
-                autoComplete="Co-Ordinator-name"
-                value={selectedCenter}
-                onChange={(e) => setSelectedCenter(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {centers.map((centr) =>
-                  centr.centers.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))
-                )}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="classs" className={styles.label}>
-              Select Class
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="classs"
-                name="classs"
-                autoComplete="classs"
-                required
-                value={selectedClass}
-                onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {classes.map((cls) => (
-                  <option
-                    key={cls.ClassId}
-                    data-classid={cls.ClassId}
-                    value={cls.ClassName}
-                  >
-                    {cls.ClassName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="btnwrapper">
-            <button
-              type="submit"
-              onClick={handleSearch}
-              className={styles.button}
+        <div className={styles.container}>
+          <label htmlFor="exam" className={styles.label}>
+            Select Exam
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="exam"
+              name="exam"
+              autoComplete="exam-name"
+              required
+              value={exam}
+              onChange={(e) => setExam(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
-              Search
-            </button>
+              <option value="">Select</option>
+              {exams.map((exm) => (
+                <option key={exm._id} value={exm.name}>
+                  {exm.name}
+                </option>
+              ))}
+            </select>
           </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="district" className={styles.label}>
+            Select District
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="district"
+              name="district"
+              autoComplete="district-name"
+              required
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {districts.map((dist) => (
+                <option key={dist._id} value={dist._id}>
+                  {dist._id}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="Taluka" className={styles.label}>
+            Select Taluka
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="Taluka"
+              name="Taluka"
+              autoComplete="Taluka-name"
+              value={taluka}
+              onChange={(e) => setTaluka(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {talukas.map((tal) => (
+                <option key={tal._id} value={tal.taluka}>
+                  {tal.taluka}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="Co-Ordinator" className={styles.label}>
+            Select Exam Center
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="Co-Ordinator"
+              name="Co-Ordinator"
+              autoComplete="Co-Ordinator-name"
+              value={selectedCenter}
+              onChange={(e) => setSelectedCenter(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {centers.map((centr) =>
+                centr.centers.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="classs" className={styles.label}>
+            Select Class
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="classs"
+              name="classs"
+              autoComplete="classs"
+              required
+              value={selectedClass}
+              onChange={(e) => setSelectedClass(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {classes.map((cls) => (
+                <option
+                  key={cls.ClassId}
+                  data-classid={cls.ClassId}
+                  value={cls.ClassName}
+                >
+                  {cls.ClassName}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="btnwrapper">
+          <button
+            type="submit"
+            onClick={handleSearch}
+            className={styles.button}
+          >
+            Search
+          </button>
         </div>
       </div>
       {see ? (
-        <div
-          className={`${styles.containers}  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
-        >
+        <div className={`${styles.containers}  p-8 rounded-lg shadow-2xl`}>
           <div className="mb-7" style={{ marginBottom: "10px" }}>
             <div className="relative m-10 mb-6 p-8 transition-all duration-500 hover:shadow-3xl hover:scale-102">
               <button
@@ -474,17 +468,19 @@ export default function Center() {
                   </tr>
                 </thead>
                 <tbody className={styles.tbodys}>
-                  {currentDistricts.map((dat) => (
+                  {currentDistricts.map((dat, index) => (
                     <tr
                       key={`${dat.RollNo}-${dat._id}`}
-                      className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform"
+                      className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform"
                     >
-                      <td className="px-6 py-2">{dat.rank}</td>
-                      <td className="px-6 py-2">{dat.RollNo}</td>
-                      <td className="px-6 py-2">{dat.StudentName}</td>
-                      <td className="px-6 py-2">{dat.Standard}</td>
+                      <td className="px-6 py-2">{index + 1}</td>
+                      <td className="px-6 py-2">{dat.rollNo}</td>
+                      <td className="px-6 py-2">{dat.studentName}</td>
+                      <td className="px-6 py-2">{dat.standard}</td>
                       <td className="px-6 py-2">{dat.medium}</td>
-                      <td className="px-6 py-2">{dat.school}</td>
+                      <td className="px-6 py-2">{dat.schoolName}</td>
+                      <td className="px-6 py-2">{dat.center}</td>
+                      <td className="px-6 py-2">{dat.taluka}</td>
 
                       {dat.subjects.map((subject, idx) => (
                         <td key={idx} className="px-6 py-2">
@@ -494,6 +490,7 @@ export default function Center() {
 
                       {/* Render the total marks */}
                       <td className="px-6 py-2">{dat.totalMarks}</td>
+                      <td className="px-6 py-2">{dat.Rank}</td>
                     </tr>
                   ))}
                 </tbody>

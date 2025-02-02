@@ -135,7 +135,7 @@ export default function SeeClass() {
     <>
       <ToastContainer />
       <div
-        className={`${styles.containers} bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
+        className={`${styles.containers} p-8 rounded-lg shadow-2xl`}
       >
         <div
           className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
@@ -197,7 +197,7 @@ export default function SeeClass() {
                 {currentClasses.map((cls, index) => (
                   <tr
                     key={cls._id} // Assuming _id is unique
-                    className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform"
+                    className="bg-white hover:bg-gray-50  transition ease-in-out duration-300 transform"
                   >
                     <td className="px-6 py-2">{index + 1}</td>
                     <td className="px-6 py-2">{cls.ClassId}</td>

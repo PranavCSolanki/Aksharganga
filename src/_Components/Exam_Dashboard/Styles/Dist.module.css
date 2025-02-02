@@ -66,7 +66,7 @@
   font-weight: bold;
   text-align: center;
   margin-bottom: 18px;
-  color: #1a202c;
+  color: #3f74e0;
   margin-left: 18rem;
 }
 .heading2 {
@@ -81,18 +81,18 @@
   background-color: #f7fafc;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(106, 225, 246, 0.1);
 }
 
 .tbodys {
   text-align: center;
 }
 .tbodys tr:nth-child(odd) {
-  background-color: rgb(199, 211, 251);
+  background-color: rgb(166, 209, 255);
 }
 
 .tbodys tr:hover {
-  background-color: #72b8fe;
+  background-color: #83c0fe;
   cursor: pointer;
 }
 

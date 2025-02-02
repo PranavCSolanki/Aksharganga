@@ -13,7 +13,7 @@ export default function CenterList() {
 
   return (
     <div className="container mx-auto p-6">
-     <div className="flex space-x-4 border-b-2 border-gray-300 mb-6">
+     <div className="flex space-x-4  mb-6">
         <button
           onClick={() => handleTabClick("tab1")}
           className={`${

@@ -371,7 +371,6 @@ export default function SeeList() {
     <>
       <ToastContainer />
       <div className={styles.containers}>
-        <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border">
           <div className={styles.container}>
             <label htmlFor="exam" className={styles.label}>
               Select Exam
@@ -384,7 +383,7 @@ export default function SeeList() {
                 required
                 value={exam}
                 onChange={(e) => setExam(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+               className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {exams.map((exm) => (
@@ -408,7 +407,7 @@ export default function SeeList() {
                 required
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+               className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {districts.map((dist) => (
@@ -431,7 +430,7 @@ export default function SeeList() {
                 autoComplete="Taluka-name"
                 value={taluka}
                 onChange={(e) => setTaluka(e.target.value)}
-                className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {talukas.map((tal) => (
@@ -454,7 +453,7 @@ export default function SeeList() {
                 autoComplete="Co-Ordinator-name"
                 value={selectedCenter}
                 onChange={(e) => setSelectedCenter(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
               >
                 <option value="">Select</option>
                 {centers.map((centr) =>
@@ -502,23 +501,14 @@ export default function SeeList() {
                   </li>
                   <br />
                   {schools.map((tech) => (
-                    <li
-                      key={tech}
-                      className="relative p-6 flex m-8 rounded-2xl border border-blue-300 hover:shadow-2xl hover:border-blue-500"
-                      style={{
-                        marginLeft: "100px",
-                        marginRight: "100px",
-                        marginTop: "2px",
-                        fontSize: "6px",
-                      }}
-                    >
+                    <li key={tech} >
                       <input
                         type="checkbox"
                         id={`${tech}-checkbox`}
                         checked={selectedSchools.includes(tech)}
                         onChange={() => handleCheckboxschool(tech)}
                         className="w-6 m-6 h-6 text-blue-700 border-gray-300 rounded-lg focus:ring-blue-500 focus:ring-2"
-                        style={{ marginRight: "50px", marginTop: "7px" }}
+                        style={{ marginRight: "50px"}}
                       />
                       <label
                         htmlFor={`${tech}-checkbox`}
@@ -539,13 +529,7 @@ export default function SeeList() {
           {selectedCenter ? (
             <div className={styles.relative}>
               <ul className="grid grid-rows-4 gap-4">
-                <li
-                  style={{
-                    marginLeft: "100px",
-                    marginRight: "100px",
-                    marginTop: "10px",
-                  }}
-                >
+                <li >
                   <div className={styles.container}>
                     <input
                       type="checkbox"
@@ -555,8 +539,6 @@ export default function SeeList() {
                         setSelectedStandards(isChecked ? classes : []);
                       }}
                       checked={selectedStandards.length === classes.length}
-                      style={{ marginRight: "30px", marginTop: "6px" }}
-                      className="w-6 m-6 h-6 text-blue-700 border-gray-300 rounded-lg focus:ring-blue-500 focus:ring-2"
                     />
                     <label
                       htmlFor="selectAllStandards"
@@ -571,26 +553,19 @@ export default function SeeList() {
                 {classes.map((tech) => (
                   <li
                     key={tech}
-                    className="relative p-6 flex m-8 rounded-2xl border border-blue-300 hover:shadow-2xl hover:border-blue-500"
-                    style={{
-                      marginLeft: "100px",
-                      marginRight: "100px",
-                      marginTop: "10px",
-                    }}
+                    
                   >
                     <input
                       type="checkbox"
                       id={`${tech}-checkbox`}
                       checked={selectedStandards.includes(tech)}
                       onChange={() => handleCheckboxstd(tech)}
-                      className="w-6 m-6 h-6 text-blue-700 border-gray-300 rounded-lg focus:ring-blue-500 focus:ring-2"
-                      style={{ marginRight: "30px", marginTop: "6px" }}
                     />
                     <label
                       htmlFor={`${tech}-checkbox`}
                       className={styles.label}
                     >
-                      <span className="transition-transform duration-300 ease-in-out group-hover:scale-105">
+                      <span>
                         {tech}
                       </span>
                     </label>
@@ -610,29 +585,29 @@ export default function SeeList() {
             </button>
           </div>
         </div>
-      </div>
+      
 
-          <div className={styles.containers}>
-            <div
-              className="flex justify-center items-center m-6 p-6 bg-white rounded-xl border border-gray-200  transition-shadow duration-300 ease-in-out"
-              style={{ marginBottom: "20px" }}
-            >
-              <div className="text-3xl font-bold m-8 text-transparent bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text hover:from-red-400 hover:to-yellow-400 transition-colors duration-300 ease-in-out">
-                Exam :- {exam}
-              </div>
-            </div>
-            <div className="flex justify-between items-center mb-6 p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 ease-in-out">
-              <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text hover:from-blue-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
-                Distrtict :- {district}
-              </div>
-              <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-green-500 via-teal-500 to-blue-500 bg-clip-text hover:from-green-400 hover:to-blue-400 transition-colors duration-300 ease-in-out">
-                Taluka :- {taluka}
-              </div>
-              <div className="text-5xl font-bold text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 bg-clip-text hover:from-pink-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
-                Center :- {selectedCenter}
-              </div>
-            </div>
+           <div className={styles.containers}>
+        <div
+          className="flex justify-center items-center  bg-white rounded-xl "
+          style={{ marginBottom: "20px" }}
+        >
+          <div className="text-xl font-bold m-8  bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text hover:from-red-400 hover:to-yellow-400 transition-colors duration-300 ease-in-out">
+            Exam :- {exam}
           </div>
+        </div>
+        <div className="flex justify-between items-center  bg-white rounded-xl  ">
+          <div className="text-xl font-bold  bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text hover:from-blue-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
+            Distrtict :- {district}
+          </div>
+          <div className="text-xl font-bold  bg-gradient-to-r from-green-500 via-teal-500 to-blue-500 bg-clip-text hover:from-green-400 hover:to-blue-400 transition-colors duration-300 ease-in-out">
+            Taluka :- {taluka}
+          </div>
+          <div className="text-xl font-bold  bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 bg-clip-text hover:from-pink-400 hover:to-purple-400 transition-colors duration-300 ease-in-out">
+            Center :- {selectedCenter}
+          </div>
+        </div>
+      </div>
           <div
             className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
           >
@@ -702,7 +677,7 @@ export default function SeeList() {
                   {currentDistricts.map((item, index) => (
                     <tr
                       key={item._id}
-                      className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform "
+                      className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform "
                     >
                       <td className="px-6 py-2">
                         {indexOfFirstItem + index + 1}
@@ -714,7 +689,7 @@ export default function SeeList() {
                       <td className="px-6 py-2">{item.school}</td>
                       <td className="px-6 py-2">{item.mobNo}</td>
                       <td
-                        className="px-6 py-2 "
+                        className="px-6 py-3"
                         style={{
                           justifyContent: "center",
                           display: "flex",

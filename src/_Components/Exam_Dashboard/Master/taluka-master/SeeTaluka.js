@@ -27,6 +27,7 @@ export default function SeeTaluka() {
         .get(`${process.env.NEXT_PUBLIC_HOST}/api/master/taluka?distName=${district}`)
         .then((response) => {
           setTalukas(response.data.data);
+          toast.success("Taluka fetched successfully");
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -164,7 +165,7 @@ export default function SeeTaluka() {
               required
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
               <option>Select</option>
               {districts.map((district) => (
@@ -186,7 +187,7 @@ export default function SeeTaluka() {
       </div>
       
         <div
-          className={`${styles.containers} bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
+          className={`${styles.containers} p-8 rounded-lg shadow-2xl`}
         >
           <div
             className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
@@ -252,7 +253,7 @@ export default function SeeTaluka() {
                   {currentTalukas.map((taluka, index) => (
                     <tr
                       key={taluka.TalukaName}
-                      className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform"
+                      className="bg-white hover:bg-gray-50 transition ease-in-out duration-300 transform"
                     >
                       <td className="px-6 py-2">{index + 1}</td>
                       <td className="px-6 py-2">{taluka.distName}</td>

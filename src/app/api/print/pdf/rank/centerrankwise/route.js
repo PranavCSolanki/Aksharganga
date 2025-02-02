@@ -7,17 +7,15 @@ export async function POST(req) {
     const { searchParams } = new URL(req.url);
 
     const exam = searchParams.get("exam");
-    const standard = searchParams.get("standard");
     const district = searchParams.get("district");
     const center = searchParams.get("center");
     const taluka = searchParams.get("taluka");
 
     // Make a POST request to another API
     const getResponse = await axios.post(
-      `${process.env.NEXT_PUBLIC_HOST}/api/rank/centerrankwise`,
+      `${process.env.NEXT_PUBLIC_HOST}/api/rank/displayrank/centerrankwise`,
       {
         exam: exam,
-        standard: standard,
         district: district,
         center: center,
         taluka: taluka,
@@ -73,7 +71,7 @@ export async function POST(req) {
                             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                         }
                         th, td {
-                            padding: 12px;
+                            padding: 5px;
                             text-align: left;
                             border: 1px solid #333;
                         }
@@ -99,7 +97,7 @@ export async function POST(req) {
                     </style>
                 </head>
                 <body>
-                    <h1>Student Data for Exam: ${exam}, District: ${district}, Center: ${center}, Standard: ${standard}</h1>
+                    <h1>Student Data for Exam: ${exam}, District: ${district}, Center: ${center}</h1>
                     <table>
                         <thead>
                             `;
@@ -129,41 +127,32 @@ export async function POST(req) {
       data.forEach((item, index) => {
         html += `<tr>
                                 <td>${index + 1}</td>
-                                <td>${item.RollNo || "-"}</td>
-                                <td>${item.StudentName || "-"}</td>
-                                <td>${item.Standard || "-"}</td>
+                                <td>${item.rollNo || "-"}</td>
+                                <td>${item.studentName || "-"}</td>
+                                <td>${item.standard || "-"}</td>
                                 <td>${item.medium || "-"}</td>
-                                <td>${item.school || "-"}</td>`;
-
-        if (Array.isArray(item.subjects)) {
-          item.subjects.forEach((subject) => {
-            html += `<td>${subject.marks || "-"}</td>`;
-          });
-        }
-
-        html += `<td>${item.totalMarks || "-"}</td>
-                                <td class="px-6 py-2">
-                                    ${
-                                      item.rankType === "staterank"
-                                        ? item.rank
-                                        : "-"
-                                    }
-                                </td>
-                                <td class="px-6 py-2">
-                                    ${
-                                      item.rankType === "districtrank"
-                                        ? item.rank
-                                        : "-"
-                                    }
-                                </td>
-                                <td class="px-6 py-2">
-                                    ${
-                                      item.rankType === "centerrank"
-                                        ? item.rank
-                                        : "-"
-                                    }
-                                </td>
-                            </tr>`;
+                                <td>${item.schoolName || "-"}</td>
+                                <td>${
+                                  item.subjects[0]
+                                    ? item.subjects[0].marks
+                                    : "-"
+                                }</td>
+                                <td >${
+                                  item.subjects[1]
+                                    ? item.subjects[1].marks
+                                    : "-"
+                                }</td>
+                                <td>${item.totalMarks || "-"}</td>
+                                <td className="px-6 py-2">
+            ${item.RankType === "staterank" ? item.Rank : "-"}
+        </td>
+        <td className="px-6 py-2">
+            ${item.RankType === "districtrank" ? item.Rank : "-"}
+        </td>
+        <td className="px-6 py-2">
+            ${item.RankType === "centerinnerrank" ? item.Rank : "-"}
+        </td>
+        `;
       });
 
       html += `</tbody>
@@ -186,7 +175,7 @@ export async function POST(req) {
       // Return PDF as response
       return new NextResponse(pdfBuffer, {
         headers: {
-          "Content-Disposition": `attachment; filename="${standard}_${exam}.pdf"`,
+          "Content-Disposition": `attachment; filename="${center}_${exam}.pdf"`,
           "Content-Type": "application/pdf",
           "Content-Length": pdfBuffer.length.toString(),
         },

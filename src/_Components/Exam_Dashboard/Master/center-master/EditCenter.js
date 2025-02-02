@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 export default function EditCenter({ props, fetchData1 }) {
-  
   const [open, setOpen] = useState(false);
   const [Center, setCenter] = useState(props.CenterName);
   const [error, setError] = useState(null);
@@ -82,7 +81,7 @@ export default function EditCenter({ props, fetchData1 }) {
                         setError(null);
                       }}
                       required
-                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+                      className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
                       placeholder="Enter Center Name"
                     />
                     {error && (
@@ -122,8 +121,7 @@ export default function EditCenter({ props, fetchData1 }) {
 }
 
 EditCenter.propTypes = {
-  props: PropTypes.shape({
-  }).isRequired,
+  props: PropTypes.shape({}).isRequired,
   _id: PropTypes.string.isRequired,
   CenterName: PropTypes.string.isRequired,
   fetchData1: PropTypes.func.isRequired,

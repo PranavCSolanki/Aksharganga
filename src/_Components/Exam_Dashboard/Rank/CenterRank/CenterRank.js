@@ -16,9 +16,7 @@ export default function CenterRank() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const [classes, setClasses] = useState([]);
   const [column, setColumn] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("");
 
   const [exam, setExam] = useState("");
   const [exams, setExams] = useState([]);
@@ -75,21 +73,9 @@ export default function CenterRank() {
     }
   };
 
-  const fetchClass = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_HOST}/api/master/sortingdata/class`
-      );
-      setClasses(response.data.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   useEffect(() => {
     fetchDistrict();
     fetchExam();
-    fetchClass();
   }, []);
 
   useEffect(() => {
@@ -104,15 +90,17 @@ export default function CenterRank() {
     }
   }, [taluka]);
 
-  const filteredDistricts = data
+  const dataArray = Array.isArray(data) ? data : [];
+
+  const filteredDistricts = dataArray
     .filter((district) =>
-      district.StudentName.toLowerCase().includes(searchTerm.toLowerCase())
+      district.studentName.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       if (sortOrder === "ascending") {
-        return a.StudentName.localeCompare(b.StudentName);
+        return a.studentName.localeCompare(b.studentName);
       } else if (sortOrder === "descending") {
-        return b.StudentName.localeCompare(a.StudentName);
+        return b.studentName.localeCompare(a.studentName);
       }
       return 0;
     });
@@ -178,62 +166,43 @@ export default function CenterRank() {
 
   const handleSearch = async () => {
     try {
-      // Fetch data from the API
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_HOST}/api/rank/centerrankwise`,
+        `${process.env.NEXT_PUBLIC_HOST}/api/rank/displayrank/centerrankwise`,
         {
           exam: exam,
-          center: selectedCenter,
           district: district,
           taluka: taluka,
-          standard: selectedClass,
+          center: selectedCenter,
         }
       );
 
-      // Validate the response structure
-      if (response.data.Success && Array.isArray(response.data.data)) {
+      if (response.status === 200 && response.data.success) {
         setSee(true);
         const fetchedData = response.data.data;
         const fetchedColumns = response.data.columns;
 
-        toast.success(response.data.message || "Data fetched successfully!");
+        toast.success("Data fetched successfully!");
 
         setData(fetchedData);
         setColumn(fetchedColumns);
       } else {
-        // Handle case where API returns no data or error in response
-        toast.error(response.data.message || "No data found!");
+        toast.error("No data found!");
         setData([]);
         setSee(false);
         setColumn([]);
       }
     } catch (error) {
-      // Handle API errors
-      if (error.response.data) {
-        toast.error(
-          `Error: ${error.response.data.message || "Failed to fetch data."}`
-        );
-      } else {
-        toast.error(`Error: ${error.message || "Failed to fetch data."}`);
-      }
-      console.error("Error fetching data:", error);
-
+      toast.error(`Error: ${error.message || "Failed to fetch data."}`);
       setData([]);
       setColumn([]);
       setSee(false);
     }
   };
 
-  const handlePdfDownload = async (
-    exam,
-    district,
-    selectedClass,
-    selectedCenter,
-    taluka
-  ) => {
+  const handlePdfDownload = async (exam, district, selectedCenter, taluka) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/rank/centerrankwise?exam=${exam}&standard=${selectedClass}&district=${district}&center=${selectedCenter}&taluka=${taluka}`,
+        `${process.env.NEXT_PUBLIC_HOST}/api/print/pdf/rank/centerrankwise?exam=${exam}&district=${district}&center=${selectedCenter}&taluka=${taluka}`,
         null,
         {
           headers: {
@@ -251,7 +220,7 @@ export default function CenterRank() {
       const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = downloadUrl;
-      link.download = `${exam}_${selectedClass}.pdf`; // File name with .pdf extension
+      link.download = `${exam}_${selectedCenter}.pdf`; // File name with .pdf extension
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -269,146 +238,114 @@ export default function CenterRank() {
       <ToastContainer />
       <div className={styles.heading2}>Center (Rank Wise)</div>
       <div className={styles.containers}>
-        <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl  border  transition-transform transform ">
-          <div className={styles.container}>
-            <label htmlFor="exam" className={styles.label}>
-              Select Exam
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="exam"
-                name="exam"
-                autoComplete="exam-name"
-                required
-                value={exam}
-                onChange={(e) => setExam(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {exams.map((exm) => (
-                  <option key={exm._id} value={exm.name}>
-                    {exm.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="district" className={styles.label}>
-              Select District
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="district"
-                name="district"
-                autoComplete="district-name"
-                required
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {districts.map((dist) => (
-                  <option key={dist._id} value={dist._id}>
-                    {dist._id}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="Taluka" className={styles.label}>
-              Select Taluka
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="Taluka"
-                name="Taluka"
-                autoComplete="Taluka-name"
-                value={taluka}
-                onChange={(e) => setTaluka(e.target.value)}
-                className="block rounded-md w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {talukas.map((tal) => (
-                  <option key={tal._id} value={tal.taluka}>
-                    {tal.taluka}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="Co-Ordinator" className={styles.label}>
-              Select Exam Center
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="Co-Ordinator"
-                name="Co-Ordinator"
-                autoComplete="Co-Ordinator-name"
-                value={selectedCenter}
-                onChange={(e) => setSelectedCenter(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {centers.map((centr) =>
-                  centr.centers.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))
-                )}
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.container}>
-            <label htmlFor="classs" className={styles.label}>
-              Select Class
-            </label>
-            <div className={styles.relative}>
-              <select
-                id="classs"
-                name="classs"
-                autoComplete="classs"
-                required
-                value={selectedClass}
-                onChange={(e) => setSelectedClass(e.target.value)}
-                className="w-full block rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              >
-                <option value="">Select</option>
-                {classes.map((cls) => (
-                  <option
-                    key={cls.ClassId}
-                    data-classid={cls.ClassId}
-                    value={cls.ClassName}
-                  >
-                    {cls.ClassName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="btnwrapper">
-            <button
-              type="submit"
-              onClick={handleSearch}
-              className={styles.button}
+        <div className={styles.container}>
+          <label htmlFor="exam" className={styles.label}>
+            Select Exam
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="exam"
+              name="exam"
+              autoComplete="exam-name"
+              required
+              value={exam}
+              onChange={(e) => setExam(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
             >
-              Search
-            </button>
+              <option value="">Select</option>
+              {exams.map((exm) => (
+                <option key={exm._id} value={exm.name}>
+                  {exm.name}
+                </option>
+              ))}
+            </select>
           </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="district" className={styles.label}>
+            Select District
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="district"
+              name="district"
+              autoComplete="district-name"
+              required
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {districts.map((dist) => (
+                <option key={dist._id} value={dist._id}>
+                  {dist._id}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="Taluka" className={styles.label}>
+            Select Taluka
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="Taluka"
+              name="Taluka"
+              autoComplete="Taluka-name"
+              value={taluka}
+              onChange={(e) => setTaluka(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {talukas.map((tal) => (
+                <option key={tal._id} value={tal.taluka}>
+                  {tal.taluka}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className={styles.container}>
+          <label htmlFor="Co-Ordinator" className={styles.label}>
+            Select Exam Center
+          </label>
+          <div className={styles.relative}>
+            <select
+              id="Co-Ordinator"
+              name="Co-Ordinator"
+              autoComplete="Co-Ordinator-name"
+              value={selectedCenter}
+              onChange={(e) => setSelectedCenter(e.target.value)}
+              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+            >
+              <option value="">Select</option>
+              {centers.map((centr) =>
+                centr.centers.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+        </div>
+
+        <div className="btnwrapper">
+          <button
+            type="submit"
+            onClick={handleSearch}
+            className={styles.button}
+          >
+            Search
+          </button>
         </div>
       </div>
       {see ? (
-        <div
-          className={`${styles.containers}  bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 p-8 rounded-lg shadow-2xl`}
-        >
+        <div className={`${styles.containers}  p-8 rounded-lg shadow-2xl`}>
           <div
             className={`${styles.tab} bg-white p-6 overflow-y-auto rounded-lg shadow-lg`}
           >
@@ -455,13 +392,7 @@ export default function CenterRank() {
                     className="relative bg-opacity-30  p-2 rounded-full  text-center flex items-center justify-center transition-transform duration-300 transform hover:scale-105"
                     style={{ backgroundColor: "pink", border: "1px solid red" }}
                     onClick={() =>
-                      handlePdfDownload(
-                        exam,
-                        district,
-                        selectedClass,
-                        selectedCenter,
-                        taluka
-                      )
+                      handlePdfDownload(exam, district, selectedCenter, taluka)
                     }
                   >
                     <FaPrint className="text-black text-lg m-2" />
@@ -496,29 +427,30 @@ export default function CenterRank() {
                 <tbody className={styles.tbodys}>
                   {currentDistricts.map((dat, index) => (
                     <tr
-                      key={`${dat.RollNo}-${dat._id}`}
-                      className="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600 transition ease-in-out duration-300 transform"
+                      key={`${dat.rollNo}-${dat._id}`} // Corrected key prop formatting
+                      className="bg-white border-b hover:bg-gray-50  transition ease-in-out duration-300 transform"
                     >
                       <td className="px-6 py-2">{index + 1}</td>
-                      <td className="px-6 py-2">{dat.RollNo}</td>
-                      <td className="px-6 py-2">{dat.StudentName}</td>
-                      <td className="px-6 py-2">{dat.Standard}</td>
+                      <td className="px-6 py-2">{dat.rollNo}</td>
+                      <td className="px-6 py-2">{dat.studentName}</td>
+                      <td className="px-6 py-2">{dat.standard}</td>
                       <td className="px-6 py-2">{dat.medium}</td>
-                      <td className="px-6 py-2">{dat.school}</td>
-                      {dat.subjects.map((subject, idx) => (
-                        <td key={idx} className="px-6 py-2">
-                          {subject.marks}
-                        </td>
-                      ))}
+                      <td className="px-6 py-2">{dat.schoolName}</td>
+                      <td className="px-6 py-2">
+                        {dat.subjects[0] ? dat.subjects[0].marks : "-"}
+                      </td>
+                      <td className="px-6 py-2">
+                        {dat.subjects[1] ? dat.subjects[1].marks : "-"}
+                      </td>
                       <td className="px-6 py-2">{dat.totalMarks}</td>
                       <td className="px-6 py-2">
-                        {dat.rankType === "staterank" ? dat.rank : "-"}
+                        {dat.RankType === "staterank" ? dat.Rank : "-"}
                       </td>
                       <td className="px-6 py-2">
-                        {dat.rankType === "districtrank" ? dat.rank : "-"}
+                        {dat.RankType === "districtrank" ? dat.Rank : "-"}
                       </td>
                       <td className="px-6 py-2">
-                        {dat.rankType === "centerrank" ? dat.rank : "-"}
+                        {dat.RankType === "centerinnerrank" ? dat.Rank : "-"}
                       </td>
                     </tr>
                   ))}

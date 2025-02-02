@@ -44,7 +44,6 @@ export default function AddClass() {
   return (
     <div className={styles.containers}>
       <ToastContainer />
-      <div className="mt-12 max-w-md mx-auto p-10 rounded-2xl border">
         <div className={styles.container}>
           <label htmlFor="name" className={styles.label}>
             Enter Class Name
@@ -57,7 +56,8 @@ export default function AddClass() {
               value={clas}
               onChange={(e) => setClas(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+
               placeholder="Enter Class Name"
             />
             {error ? (
@@ -83,7 +83,8 @@ export default function AddClass() {
               value={clasid}
               onChange={(e) => setClasid(e.target.value)}
               required
-              className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-10"
+             className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-3 m-5"
+
               placeholder="Enter Class ID"
             />
             {errorid ? (
@@ -103,7 +104,6 @@ export default function AddClass() {
             Add Class
           </button>
         </div>
-      </div>
     </div>
   );
 }
